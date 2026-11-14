@@ -132,7 +132,8 @@
   .chk.checked { background: var(--accent); border-color: var(--accent); }
   .item-info { flex: 1; min-width: 0; cursor: pointer; }
   .item-name { font-size: 13.5px; font-weight: 700; line-height: 1.3; }
-  .item-tag { font-size: 11px; color: var(--sub); margin-top: 2px; line-height: 1.3; }
+  .item-tag { font-size: 11px; color: var(--sub); margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .fridge-tools { display: flex; align-items: center; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
   .btn-buy {
     text-decoration: none; background: var(--accent-soft); color: var(--accent);
     border: 1.5px solid #ecdcc6; border-radius: 10px; padding: 5px 8px;
@@ -823,7 +824,7 @@ function render() {
             <div class="chk" onclick="buyItem(${it.id})"></div>
             <div class="item-info" onclick="buyItem(${it.id})">
               <div class="item-name">${it.name}</div>
-              ${it.note ? `<div class="item-tag">${it.note} · 체크하면 냉장고로 이동</div>` : '<div class="item-tag">체크하면 냉장고 재고로 이동</div>'}
+              ${it.note ? `<div class="item-tag">${it.note}</div>` : '<div class="item-tag">체크하면 냉장고 재고로 이동</div>'}
             </div>
             <div class="qty-ctrl">
               <button class="qty-btn" onclick="changeQty(${it.id}, -1)" ${(it.qty || 1) <= 1 ? 'disabled' : ''} aria-label="${it.name} 수량 줄이기">−</button>
@@ -870,10 +871,12 @@ function renderFridge() {
               <button class="btn-fav" style="font-size:17px;" onclick="toggleFridgeFav(${f.id})" aria-label="상비템 즐겨찾기">${f.fav ? '⭐' : '☆'}</button>
               <div class="item-info">
                 <div class="item-name">${f.name}</div>
-                <div class="item-tag">상태 눌러서 변경 (많음→절반→거의 다 씀)</div>
+                <div class="fridge-tools">
+                  <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})">${f.status}</button>
+                  <button class="btn-readd" onclick="sendToCart(${f.id})">다 먹음→장보기</button>
+                  <span class="item-tag" style="margin:0;">눌러서 상태 변경</span>
+                </div>
               </div>
-              <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})">${f.status}</button>
-              <button class="btn-readd" onclick="sendToCart(${f.id})">다 먹음→장보기</button>
               <button class="btn-del" onclick="delFridge(${f.id})" aria-label="삭제">✕</button>
             </div>
           `;
