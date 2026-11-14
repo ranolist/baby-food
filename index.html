@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>오늘 뭐 먹이지? 아기 먹거리·장보기</title>
+<style>
+  :root {
+    --bg: #faf8f5;
+    --card: #ffffff;
+    --text: #292524;
+    --sub: #78716c;
+    --line: #e7e5e4;
+    --accent: #ea580c;
+    --accent-soft: #fff7ed;
+    --green: #15803d;
+    --green-soft: #f0fdf4;
+    --blue: #1d4ed8;
+    --blue-soft: #eff6ff;
+    --amber: #b45309;
+    --amber-soft: #fef3c7;
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Pretendard", "Noto Sans KR", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-bottom: 92px;
+  }
+  .wrap { max-width: 460px; margin: 0 auto; padding: 16px; }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  header h1 { font-size: 19px; font-weight: 800; margin: 0 0 2px; letter-spacing: -0.3px; }
+  header p { font-size: 12px; color: var(--sub); margin: 0; }
+  .header-btns { display: flex; gap: 6px; }
+  .btn-copy-cart {
+    background: var(--text); color: #fff; border: none; border-radius: 12px;
+    padding: 8px 11px; font-size: 12px; font-weight: 700; cursor: pointer;
+  }
+  .btn-bulk {
+    background: #fff; color: var(--text); border: 1px solid var(--line); border-radius: 12px;
+    padding: 8px 10px; font-size: 12px; font-weight: 700; cursor: pointer;
+  }
+
+  .tabs { display: flex; gap: 5px; margin-bottom: 14px; }
+  .tab {
+    flex: 1; padding: 10px 2px; border-radius: 12px; border: 1px solid var(--line);
+    background: #fff; font-size: 12px; font-weight: 700; color: var(--sub); cursor: pointer;
+    white-space: nowrap;
+  }
+  .tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .card {
+    background: var(--card); border-radius: 18px; padding: 14px 16px;
+    border: 1px solid var(--line); margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(41, 37, 36, 0.03);
+  }
+  .cat-title {
+    font-size: 13px; font-weight: 800; color: var(--sub); margin: 0 0 10px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+
+  .quick-box {
+    background: #fff; border: 1px solid var(--line); border-radius: 16px;
+    padding: 11px 12px; margin-bottom: 12px;
+  }
+  .quick-label { font-size: 11.5px; font-weight: 800; color: var(--sub); margin-bottom: 8px; }
+  .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .qchip {
+    border: 1px solid #fed7aa; background: var(--accent-soft); color: #9a3412;
+    border-radius: 999px; padding: 6px 11px; font-size: 12px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+  }
+
+  .item-row {
+    display: flex; align-items: center; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid #f5f5f4;
+  }
+  .item-row:last-child { border-bottom: none; padding-bottom: 2px; }
+  .chk {
+    width: 22px; height: 22px; border-radius: 7px; border: 2px solid #d6d3d1;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    flex-shrink: 0; font-size: 13px; font-weight: 800; color: #fff; background: #fff;
+  }
+  .chk.checked { background: var(--accent); border-color: var(--accent); }
+  .item-info { flex: 1; }
+  .item-name { font-size: 14px; font-weight: 700; }
+  .item-tag { font-size: 11px; color: var(--sub); margin-top: 2px; }
+  .btn-buy {
+    text-decoration: none; background: var(--accent-soft); color: var(--accent);
+    border: 1px solid #fed7aa; border-radius: 10px; padding: 6px 10px;
+    font-size: 11px; font-weight: 800; white-space: nowrap; cursor: pointer;
+  }
+  .btn-readd {
+    background: var(--accent-soft); color: var(--accent); border: 1px solid #fed7aa;
+    border-radius: 8px; padding: 5px 8px; font-size: 11px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+  .btn-del {
+    background: none; border: none; color: #d6d3d1; font-size: 15px; cursor: pointer; padding: 2px 4px;
+  }
+  .clear-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
+  .btn-clear-all {
+    background: none; border: 1px solid #fecaca; color: #dc2626; border-radius: 999px;
+    padding: 5px 11px; font-size: 11.5px; font-weight: 700; cursor: pointer;
+  }
+
+  .add-bar { display: flex; gap: 6px; margin-bottom: 10px; }
+  .add-bar input {
+    flex: 1; border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px;
+    font-size: 13px; font-family: inherit; background: #fff;
+  }
+  .add-bar select {
+    border: 1px solid var(--line); border-radius: 12px; padding: 0 8px;
+    font-size: 12px; font-weight: 600; background: #fff; font-family: inherit;
+  }
+  .btn-add {
+    background: var(--accent); color: #fff; border: none; border-radius: 12px;
+    padding: 0 14px; font-size: 13px; font-weight: 800; cursor: pointer;
+  }
+
+  /* Fridge Stock Status */
+  .stock-pill {
+    border: none; border-radius: 999px; padding: 5px 10px; font-size: 11px;
+    font-weight: 800; cursor: pointer; white-space: nowrap; font-family: inherit;
+  }
+  .stock-full { background: var(--green-soft); color: var(--green); }
+  .stock-half { background: var(--amber-soft); color: var(--amber); }
+  .stock-low { background: #fee2e2; color: #dc2626; }
+
+  /* Recipe Cards */
+  .recipe-filter { display: flex; gap: 6px; margin-bottom: 10px; }
+  .fbtn {
+    padding: 7px 12px; border-radius: 999px; border: 1px solid var(--line);
+    background: #fff; font-size: 12px; font-weight: 700; color: var(--sub); cursor: pointer;
+  }
+  .fbtn.active { background: var(--text); color: #fff; border-color: var(--text); }
+  .recipe-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .btn-fav {
+    background: none; border: none; font-size: 20px; cursor: pointer; padding: 0 2px; line-height: 1;
+  }
+  .recipe-title { font-size: 15px; font-weight: 800; margin: 0 0 3px; }
+  .recipe-meta { font-size: 11.5px; color: var(--sub); }
+  .recipe-steps {
+    font-size: 13px; line-height: 1.55; color: #44403c;
+    background: #fafaf9; border-radius: 12px; padding: 10px 12px; margin: 8px 0 10px;
+  }
+  .ing-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ing-btn {
+    border: 1px solid var(--line); background: #fff; border-radius: 999px;
+    padding: 5px 10px; font-size: 11.5px; font-weight: 700; color: var(--text);
+    cursor: pointer; font-family: inherit;
+  }
+
+  /* Korean Food Tab */
+  .kr-banner {
+    background: var(--blue-soft); border: 1px solid #bfdbfe; border-radius: 14px;
+    padding: 10px 12px; font-size: 12px; color: #1e40af; font-weight: 600;
+    margin-bottom: 12px; line-height: 1.45;
+  }
+  .pick-card {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 0; border-bottom: 1px solid #f5f5f4;
+  }
+  .pick-card:last-child { border-bottom: none; padding-bottom: 2px; }
+  .pick-badge {
+    display: inline-block; font-size: 10px; font-weight: 800; padding: 2px 7px;
+    border-radius: 6px; background: var(--green-soft); color: var(--green); margin-bottom: 4px;
+  }
+  .pick-title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
+  .pick-desc { font-size: 12px; color: var(--sub); line-height: 1.4; }
+  .kr-actions { display: flex; flex-direction: column; gap: 4px; align-items: flex-end; }
+  .btn-mini-add {
+    background: #f5f5f4; color: var(--text); border: none; border-radius: 8px;
+    padding: 5px 8px; font-size: 10.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
+  }
+
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.45);
+    display: none; align-items: flex-end; justify-content: center; z-index: 90;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: #fff; width: 100%; max-width: 460px; border-radius: 22px 22px 0 0;
+    padding: 18px 16px 24px;
+  }
+  .modal h3 { margin: 0 0 6px; font-size: 16px; font-weight: 800; }
+  .modal p { margin: 0 0 10px; font-size: 12px; color: var(--sub); }
+  .modal textarea {
+    width: 100%; height: 120px; border: 1px solid var(--line); border-radius: 12px;
+    padding: 10px; font-size: 13px; font-family: inherit; margin-bottom: 10px;
+  }
+  .modal-btns { display: flex; gap: 8px; }
+  .btn-m { flex: 1; padding: 12px; border-radius: 12px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; }
+  .btn-m.close { background: #f5f5f4; color: var(--text); }
+  .btn-m.go { background: var(--accent); color: #fff; }
+
+  .ftc-notice {
+    font-size: 11px; color: var(--sub); text-align: center; line-height: 1.5;
+    padding: 10px 8px; margin-top: 6px;
+  }
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: #292524; color: #fff; padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 600; display: none; z-index: 100;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>🍙 아기 먹거리·장보기</h1>
+      <p>장보기부터 냉장고 재고까지 한 번에</p>
+    </div>
+    <div class="header-btns">
+      <button class="btn-bulk" onclick="openBulk()">📥 복붙 추가</button>
+      <button class="btn-copy-cart" onclick="copyUnbought()">📋 살 것 복사</button>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" onclick="setTab('cart', this)">🛒 장보기</button>
+    <button class="tab" onclick="setTab('fridge', this)">🧊 냉장고</button>
+    <button class="tab" onclick="setTab('recipe', this)">🍳 레시피</button>
+    <button class="tab" onclick="setTab('kr', this)">⭐ 추천템</button>
+  </div>
+
+  <!-- Tab 1: Shopping Checklist -->
+  <div id="tab-cart">
+    <div class="quick-box">
+      <div class="quick-label" style="display:flex;justify-content:space-between;align-items:center;">
+        <span>⚡ 타자 없이 1초 담기 (자주 사는 단골템)</span>
+        <button onclick="toggleQuickEdit()" id="btnQuickEdit" style="background:none;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--sub);cursor:pointer;">⚙️ 편집</button>
+      </div>
+      <div class="quick-chips" id="quickChips"></div>
+      <div id="quickEditRow" style="display:none;margin-top:8px;gap:6px;">
+        <input type="text" id="newQuickName" placeholder="새 단골템 이름 (예: 아기 요거트)" style="flex:1;border:1px solid var(--line);border-radius:10px;padding:6px 10px;font-size:12px;font-family:inherit;">
+        <button onclick="addQuickChip()" style="background:var(--accent);color:#fff;border:none;border-radius:10px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;">추가</button>
+      </div>
+    </div>
+
+    <div class="add-bar">
+      <select id="newCat">
+        <option value="반찬·식재료">반찬·재료</option>
+        <option value="간식·유제품">간식·유제품</option>
+        <option value="국산·영양">국산·영양</option>
+      </select>
+      <input type="text" id="newName" placeholder="살 먹거리 입력 (예: 애호박)">
+      <button class="btn-add" onclick="addItem()">추가</button>
+    </div>
+
+    <div class="clear-row">
+      <button class="btn-clear-all" onclick="clearCartAll()">🗑️ 장보기 전체 비우기</button>
+    </div>
+    <div id="cartList"></div>
+  </div>
+
+  <!-- Tab 2: Fridge Inventory -->
+  <div id="tab-fridge" style="display:none;">
+    <div class="recipe-filter" style="justify-content: space-between; align-items: center;">
+      <div style="display:flex; gap:6px;">
+        <button class="fbtn active" onclick="setFridgeFilter('all', this)">전체 재고</button>
+        <button class="fbtn" onclick="setFridgeFilter('fav', this)">⭐ 상비템만</button>
+      </div>
+      <button class="btn-clear-all" onclick="clearFridgeAll()">🗑️ 전체 비우기</button>
+    </div>
+    <div class="add-bar">
+      <select id="fridgePlace">
+        <option value="냉장">냉장실</option>
+        <option value="냉동">냉동실</option>
+        <option value="실온">실온·팬트리</option>
+      </select>
+      <input type="text" id="fridgeName" placeholder="지금 있는 식재료 추가">
+      <button class="btn-add" onclick="addFridge()">추가</button>
+    </div>
+    <div id="fridgeList"></div>
+  </div>
+
+  <!-- Tab 3: Toddler Recipes -->
+  <div id="tab-recipe" style="display:none;">
+    <div class="add-bar">
+      <input type="text" id="recipeSearch" placeholder="🔍 레시피·재료 검색 (예: 소고기, 두부)" oninput="renderRecipes()">
+      <button class="btn-add" onclick="openRecipeModal()">+ 새 레시피</button>
+    </div>
+    <div class="recipe-filter">
+      <button class="fbtn active" onclick="setRecipeFilter('all', this)">전체 레시피</button>
+      <button class="fbtn" onclick="setRecipeFilter('fav', this)">⭐ 즐겨찾기만</button>
+    </div>
+    <div id="recipeList"></div>
+  </div>
+
+  <!-- Tab 4: Curated Recommendations (Coupang Partners Area) -->
+  <div id="tab-kr" style="display:none;">
+    <div class="recipe-filter" style="flex-wrap:wrap;">
+      <button class="fbtn active" onclick="setPickFilter('all', this)">전체</button>
+      <button class="fbtn" onclick="setPickFilter('kr', this)">🇰🇷 국산 먹거리</button>
+      <button class="fbtn" onclick="setPickFilter('snack', this)">🍪 간식</button>
+      <button class="fbtn" onclick="setPickFilter('gear', this)">🍽️ 식기/용품</button>
+    </div>
+    <div id="pickList"></div>
+  </div>
+
+  <div class="ftc-notice">
+    ※ 이 페이지의 일부 추천 링크는 쿠팡 파트너스 활동의 일환으로,<br>
+    이에 따른 일정액의 수수료를 제공받을 수 있습니다.
+  </div>
+</div>
+
+<!-- Bulk Paste Modal -->
+<div class="modal-bg" id="bulkModal">
+  <div class="modal">
+    <h3>📥 여러 개 한 번에 붙여넣기</h3>
+    <p>카톡 메모나 주문내역을 줄바꿈으로 붙여넣으면 자동으로 목록이 생성돼요.</p>
+    <textarea id="bulkText" placeholder="예)&#10;무항생제 계란&#10;국산콩 두부&#10;아기 요거트"></textarea>
+    <div class="modal-btns">
+      <button class="btn-m close" onclick="closeBulk()">닫기</button>
+      <button class="btn-m go" onclick="applyBulk()">한 번에 추가</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Recipe Modal -->
+<div class="modal-bg" id="recipeModal">
+  <div class="modal">
+    <h3>🍳 새 유아식 레시피 추가</h3>
+    <p>재료를 쉼표(,)로 적으면 장보기 담기 버튼이 자동으로 생겨요.</p>
+    <input type="text" id="rTitle" placeholder="요리 이름 (예: 🍲 순두부 계란국)" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;">
+    <input type="text" id="rIngs" placeholder="재료 쉼표로 구분 (예: 순두부, 계란, 아기 육수)" style="width:100%;border:1px solid var(--line);border-radius:12px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;">
+    <textarea id="rSteps" placeholder="만드는 법을 편하게 적어주세요" style="height:90px;"></textarea>
+    <div class="modal-btns">
+      <button class="btn-m close" onclick="closeRecipeModal()">닫기</button>
+      <button class="btn-m go" onclick="saveNewRecipe()">레시피 저장</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const KEY = 'baby_food_shopping_v4';
+const FRIDGE_KEY = 'baby_food_fridge_v1';
+const FAV_KEY = 'baby_food_favs_v1';
+const RECIPE_KEY = 'baby_food_recipes_v1';
+const QUICK_KEY = 'baby_food_quick_v1';
+let recipeFilter = 'all';
+let fridgeFilter = 'all';
+let pickFilter = 'all';
+let quickEditMode = false;
+
+const DEFAULT_QUICKS = [
+  ['반찬·식재료', '무항생제 계란'],
+  ['간식·유제품', '국산 멸균우유'],
+  ['반찬·식재료', '국산콩 두부'],
+  ['간식·유제품', '바나나'],
+  ['국산·영양', '국산 무염 아기김'],
+  ['간식·유제품', '저염 아기 치즈'],
+  ['반찬·식재료', '국산 소고기 다짐육'],
+  ['국산·영양', '아기 유산균']
+];
+
+function loadQuicks() {
+  try {
+    const raw = localStorage.getItem(QUICK_KEY);
+    if (!raw) { localStorage.setItem(QUICK_KEY, JSON.stringify(DEFAULT_QUICKS)); return DEFAULT_QUICKS; }
+    return JSON.parse(raw);
+  } catch (e) { return DEFAULT_QUICKS; }
+}
+function saveQuicks(list) { localStorage.setItem(QUICK_KEY, JSON.stringify(list)); }
+function toggleQuickEdit() {
+  quickEditMode = !quickEditMode;
+  document.getElementById('btnQuickEdit').textContent = quickEditMode ? '✓ 완료' : '⚙️ 편집';
+  document.getElementById('quickEditRow').style.display = quickEditMode ? 'flex' : 'none';
+  renderQuicks();
+}
+function addQuickChip() {
+  const name = document.getElementById('newQuickName').value.trim();
+  if (!name) return;
+  const list = loadQuicks();
+  list.push(['반찬·식재료', name]);
+  saveQuicks(list);
+  document.getElementById('newQuickName').value = '';
+  renderQuicks();
+}
+function delQuickChip(idx) {
+  const list = loadQuicks();
+  list.splice(idx, 1);
+  saveQuicks(list);
+  renderQuicks();
+}
+function renderQuicks() {
+  const list = loadQuicks();
+  const box = document.getElementById('quickChips');
+  box.innerHTML = list.map(([cat, name], idx) =>
+    quickEditMode
+      ? `<span class="qchip" style="display:inline-flex;align-items:center;gap:4px;background:#fff1f2;border-color:#fecdd3;color:#be123c;">${name} <button onclick="delQuickChip(${idx})" style="background:none;border:none;color:#be123c;font-weight:800;cursor:pointer;padding:0;">✕</button></span>`
+      : `<button class="qchip" onclick="quickAdd('${cat}', '${name}')">+ ${name}</button>`
+  ).join('');
+}
+
+const PICKS = [
+  { cat: 'kr', badge: '원초 100% 국산', title: '무염·저염 아기 김', desc: '기름·소금 덜어내고 국산 원초로 구운 주먹밥 필수템', addCat: '국산·영양', addName: '국산 무염 아기김' },
+  { cat: 'kr', badge: '국산 1급A 원유', title: '국산 원유 아기 멸균우유 · 치즈', desc: '외출 가방에 쏙 들어가고 상온 보관 편한 국산 원유', addCat: '간식·유제품', addName: '국산 멸균우유' },
+  { cat: 'kr', badge: '국내 제조', title: '국산 멸치 · 한우 사골 육수코인', desc: '아기 국·덮밥 5분 만에 끓여내는 무첨가 국산 육수', addCat: '국산·영양', addName: '국산 아기 육수' },
+  { cat: 'snack', badge: '무첨가 간식', title: '국산 유기농 쌀과자 · 동결건조 과일', desc: '외출 가방에 하나씩 챙기기 딱 좋은 입심심 방지템', addCat: '간식·유제품', addName: '유기농 쌀과자' },
+  { cat: 'gear', badge: '24개월+ 추천', title: '아기 첫 교정 젓가락 · 흡착식판', desc: '설거지 편하고 아이 손에 착 감기는 실사용템', addCat: '국산·영양', addName: '아기 교정 젓가락' }
+];
+
+function setPickFilter(mode, el) {
+  pickFilter = mode;
+  el.parentElement.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderPicks();
+}
+
+function renderPicks() {
+  const list = pickFilter === 'all' ? PICKS : PICKS.filter(p => p.cat === pickFilter);
+  const box = document.getElementById('pickList');
+  box.innerHTML = `<div class="card">` + list.map(p => `
+    <div class="pick-card">
+      <div>
+        <span class="pick-badge">${p.badge}</span>
+        <div class="pick-title">${p.title}</div>
+        <div class="pick-desc">${p.desc}</div>
+      </div>
+      <div class="kr-actions">
+        <a class="btn-buy" href="#" onclick="demoLink(event, '${p.title}')">쿠팡 보기</a>
+        <button class="btn-mini-add" onclick="quickAdd('${p.addCat}', '${p.addName}')">+ 장보기</button>
+      </div>
+    </div>
+  `).join('') + `</div>`;
+}
+
+const DEFAULT_ITEMS = [
+  { id: 1, cat: '반찬·식재료', name: '국산 소고기 다짐육', note: '소분해서 냉동 보관', hasLink: false },
+  { id: 2, cat: '국산·영양', name: '국산 무염 아기김', note: '원재료 국산 확인', hasLink: true },
+  { id: 3, cat: '간식·유제품', name: '국산 멸균우유', note: '재고 2개 남음', hasLink: true }
+];
+
+const DEFAULT_FRIDGE = [
+  { id: 101, place: '냉장', name: '무항생제 계란', status: '많음', fav: true },
+  { id: 102, place: '냉장', name: '저염 아기 치즈', status: '절반', fav: false },
+  { id: 103, place: '냉동', name: '소분 소고기 큐브', status: '거의 다 씀', fav: true },
+  { id: 104, place: '실온', name: '국산 무염 아기김', status: '절반', fav: true }
+];
+
+const DEFAULT_RECIPES = [
+  {
+    id: 'r1',
+    title: '🍙 5분 무염 아기김 주먹밥',
+    meta: '25개월 · 초간단 한 그릇',
+    steps: '1. 따뜻한 밥에 잘게 부순 국산 무염 아기김 + 참기름 몇 방울<br>2. 다진 야채나 저염 치즈 조금 섞어 한입 크기로 동글동글!',
+    ings: [['국산·영양', '국산 무염 아기김'], ['반찬·식재료', '국산 참기름'], ['간식·유제품', '저염 아기 치즈']]
+  },
+  {
+    id: 'r2',
+    title: '🥘 소고기 두부 애호박 덮밥',
+    meta: '25개월 · 단백질·야채 한 번에',
+    steps: '1. 다진 소고기와 애호박, 두부를 깍둑썰기해 팬에 살짝 볶기<br>2. 물 반 컵 + 아기 간장 한 방울 넣고 자작하게 졸여 밥 위에 얹기',
+    ings: [['반찬·식재료', '국산 소고기 다짐육'], ['반찬·식재료', '국산콩 두부'], ['반찬·식재료', '애호박']]
+  },
+  {
+    id: 'r3',
+    title: '🥞 바나나 계란 오트밀 팬케이크',
+    meta: '25개월 · 노밀가루 10분 간식',
+    steps: '1. 잘 익은 바나나 1개 포크로 으깨고 계란 1알 + 오트밀 2스푼 섞기<br>2. 약불에 한 숟갈씩 떠서 앞뒤로 노릇하게 굽기',
+    ings: [['간식·유제품', '바나나'], ['반찬·식재료', '무항생제 계란'], ['간식·유제품', '유기농 오트밀']]
+  }
+];
+
+function loadRecipes() {
+  try {
+    const raw = localStorage.getItem(RECIPE_KEY);
+    if (!raw) { localStorage.setItem(RECIPE_KEY, JSON.stringify(DEFAULT_RECIPES)); return DEFAULT_RECIPES; }
+    return JSON.parse(raw);
+  } catch (e) { return DEFAULT_RECIPES; }
+}
+function saveRecipes(list) { localStorage.setItem(RECIPE_KEY, JSON.stringify(list)); }
+function openRecipeModal() { document.getElementById('recipeModal').classList.add('open'); }
+function closeRecipeModal() { document.getElementById('recipeModal').classList.remove('open'); }
+function saveNewRecipe() {
+  const title = document.getElementById('rTitle').value.trim();
+  const ingsRaw = document.getElementById('rIngs').value.split(',').map(s => s.trim()).filter(Boolean);
+  const stepsRaw = document.getElementById('rSteps').value.trim();
+  if (!title) { showToast('요리 이름을 적어주세요!'); return; }
+  const list = loadRecipes();
+  list.unshift({
+    id: 'u_' + Date.now(),
+    title,
+    meta: '내 레시피',
+    steps: (stepsRaw || '재료 준비해서 아기 입맛에 맞게 조리하기').replace(/\n/g, '<br>'),
+    ings: ingsRaw.map(n => ['반찬·식재료', n]),
+    custom: true
+  });
+  saveRecipes(list);
+  document.getElementById('rTitle').value = '';
+  document.getElementById('rIngs').value = '';
+  document.getElementById('rSteps').value = '';
+  closeRecipeModal();
+  renderRecipes();
+  showToast('새 레시피가 저장되었어요!');
+}
+function delRecipe(id) {
+  if (!confirm('이 레시피를 삭제할까요?')) return;
+  saveRecipes(loadRecipes().filter(r => r.id !== id));
+  renderRecipes();
+}
+
+function loadItems() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (!raw) { localStorage.setItem(KEY, JSON.stringify(DEFAULT_ITEMS)); return DEFAULT_ITEMS; }
+    return JSON.parse(raw);
+  } catch (e) { return DEFAULT_ITEMS; }
+}
+function saveItems(items) { localStorage.setItem(KEY, JSON.stringify(items)); }
+
+function loadFridge() {
+  try {
+    const raw = localStorage.getItem(FRIDGE_KEY);
+    if (!raw) { localStorage.setItem(FRIDGE_KEY, JSON.stringify(DEFAULT_FRIDGE)); return DEFAULT_FRIDGE; }
+    return JSON.parse(raw);
+  } catch (e) { return DEFAULT_FRIDGE; }
+}
+function saveFridge(list) { localStorage.setItem(FRIDGE_KEY, JSON.stringify(list)); }
+
+function setTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  ['cart', 'fridge', 'recipe', 'kr'].forEach(t => {
+    document.getElementById('tab-' + t).style.display = tab === t ? 'block' : 'none';
+  });
+}
+
+// Check off item in cart -> move directly into Fridge Inventory!
+function buyItem(id) {
+  const items = loadItems();
+  const target = items.find(i => i.id === id);
+  if (!target) return;
+  saveItems(items.filter(i => i.id !== id));
+
+  const fridge = loadFridge();
+  const existing = fridge.find(f => f.name === target.name);
+  if (existing) {
+    existing.status = '많음';
+  } else {
+    fridge.unshift({ id: Date.now(), place: target.cat === '국산·영양' ? '실온' : '냉장', name: target.name, status: '많음' });
+  }
+  saveFridge(fridge);
+  render();
+  renderFridge();
+  showToast(`'${target.name}' 🧊 냉장고 재고로 들어갔어요!`);
+}
+
+function delItem(id) {
+  saveItems(loadItems().filter(it => it.id !== id));
+  render();
+}
+
+function clearCartAll() {
+  if (!loadItems().length) { showToast('이미 비어 있어요!'); return; }
+  if (!confirm('장보기 목록을 전부 비울까요?')) return;
+  saveItems([]);
+  render();
+  showToast('장보기 목록을 싹 비웠어요!');
+}
+
+function clearFridgeAll() {
+  if (!loadFridge().length) { showToast('이미 비어 있어요!'); return; }
+  if (!confirm('냉장고 재고 목록을 전부 비울까요?')) return;
+  saveFridge([]);
+  renderFridge();
+  showToast('냉장고 재고를 싹 비웠어요!');
+}
+
+function addItem() {
+  const name = document.getElementById('newName').value.trim();
+  const cat = document.getElementById('newCat').value;
+  if (!name) return;
+  const items = loadItems();
+  items.unshift({ id: Date.now(), cat, name, note: '', hasLink: false });
+  saveItems(items);
+  document.getElementById('newName').value = '';
+  render();
+  showToast('장보기 목록에 추가했어요!');
+}
+
+function quickAdd(cat, name) {
+  const items = loadItems();
+  if (items.some(i => i.name === name)) { showToast('이미 장보기 목록에 있어요!'); return; }
+  items.unshift({ id: Date.now(), cat, name, note: '원터치로 담음', hasLink: false });
+  saveItems(items);
+  render();
+  showToast(`'${name}' 장보기에 담았어요!`);
+}
+
+// Fridge controls
+function addFridge() {
+  const name = document.getElementById('fridgeName').value.trim();
+  const place = document.getElementById('fridgePlace').value;
+  if (!name) return;
+  const fridge = loadFridge();
+  fridge.unshift({ id: Date.now(), place, name, status: '많음' });
+  saveFridge(fridge);
+  document.getElementById('fridgeName').value = '';
+  renderFridge();
+  showToast('냉장고 재고에 추가했어요!');
+}
+
+function cycleStock(id) {
+  const order = ['많음', '절반', '거의 다 씀'];
+  const fridge = loadFridge().map(f => {
+    if (f.id !== id) return f;
+    const next = order[(order.indexOf(f.status) + 1) % order.length];
+    return { ...f, status: next };
+  });
+  saveFridge(fridge);
+  renderFridge();
+}
+
+function sendToCart(id) {
+  const fridge = loadFridge();
+  const target = fridge.find(f => f.id === id);
+  if (!target) return;
+  saveFridge(fridge.filter(f => f.id !== id));
+  quickAdd('반찬·식재료', target.name);
+  renderFridge();
+}
+
+function delFridge(id) {
+  saveFridge(loadFridge().filter(f => f.id !== id));
+  renderFridge();
+}
+
+// Bulk paste
+function openBulk() { document.getElementById('bulkModal').classList.add('open'); }
+function closeBulk() { document.getElementById('bulkModal').classList.remove('open'); }
+function applyBulk() {
+  const lines = document.getElementById('bulkText').value.split('\n').map(s => s.trim()).filter(Boolean);
+  if (!lines.length) return;
+  const items = loadItems();
+  lines.reverse().forEach((line, idx) => {
+    items.unshift({ id: Date.now() + idx, cat: '반찬·식재료', name: line, note: '복붙 추가', hasLink: false });
+  });
+  saveItems(items);
+  document.getElementById('bulkText').value = '';
+  closeBulk();
+  render();
+  showToast(`${lines.length}개 한 번에 추가했어요!`);
+}
+
+function copyUnbought() {
+  const todo = loadItems();
+  if (!todo.length) { showToast('장볼 목록이 비어 있어요!'); return; }
+  const text = '[이번 주 아기 장보기]\n' + todo.map(i => `• [${i.cat}] ${i.name}`).join('\n');
+  if (navigator.clipboard) navigator.clipboard.writeText(text).then(() => showToast('살 목록이 복사되었어요!'));
+}
+
+function demoLink(e, name) {
+  e.preventDefault();
+  showToast(`여기에 '${name}' 쿠파스 링크가 연결돼요!`);
+}
+
+// Recipes
+function loadFavs() {
+  try { return JSON.parse(localStorage.getItem(FAV_KEY) || '["r1"]'); } catch (e) { return ['r1']; }
+}
+function toggleFav(id) {
+  let favs = loadFavs();
+  const added = !favs.includes(id);
+  favs = added ? [...favs, id] : favs.filter(x => x !== id);
+  localStorage.setItem(FAV_KEY, JSON.stringify(favs));
+  renderRecipes();
+  showToast(added ? '⭐ 레시피 즐겨찾기에 저장했어요!' : '즐겨찾기에서 뺐어요');
+}
+function setRecipeFilter(mode, el) {
+  recipeFilter = mode;
+  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderRecipes();
+}
+function renderRecipes() {
+  const favs = loadFavs();
+  const q = (document.getElementById('recipeSearch')?.value || '').trim().toLowerCase();
+  let list = loadRecipes();
+  if (recipeFilter === 'fav') list = list.filter(r => favs.includes(r.id));
+  if (q) {
+    list = list.filter(r =>
+      r.title.toLowerCase().includes(q) ||
+      r.steps.toLowerCase().includes(q) ||
+      r.ings.some(([, n]) => n.toLowerCase().includes(q))
+    );
+  }
+  const box = document.getElementById('recipeList');
+  if (!list.length) {
+    box.innerHTML = '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">조건에 맞는 레시피가 없어요!</div>';
+    return;
+  }
+  box.innerHTML = list.map(r => {
+    const isFav = favs.includes(r.id);
+    return `
+      <div class="card">
+        <div class="recipe-head">
+          <div>
+            <div class="recipe-title">${r.title}</div>
+            <div class="recipe-meta">${r.meta}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:4px;">
+            <button class="btn-fav" onclick="toggleFav('${r.id}')" aria-label="즐겨찾기">${isFav ? '⭐' : '☆'}</button>
+            ${r.custom ? `<button class="btn-del" onclick="delRecipe('${r.id}')" aria-label="삭제">✕</button>` : ''}
+          </div>
+        </div>
+        <div class="recipe-steps">${r.steps}</div>
+        <div class="ing-row">
+          ${r.ings.map(([c, n]) => `<button class="ing-btn" onclick="quickAdd('${c}', '${n}')">+ ${n} 담기</button>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function render() {
+  const items = loadItems();
+  const cats = ['반찬·식재료', '간식·유제품', '국산·영양'];
+  const container = document.getElementById('cartList');
+  container.innerHTML = cats.map(cat => {
+    const list = items.filter(i => i.cat === cat);
+    if (!list.length) return '';
+    return `
+      <div class="card">
+        <div class="cat-title"><span>${cat}</span><span>${list.length}개</span></div>
+        ${list.map(it => `
+          <div class="item-row">
+            <div class="chk" onclick="buyItem(${it.id})"></div>
+            <div class="item-info" onclick="buyItem(${it.id})">
+              <div class="item-name">${it.name}</div>
+              ${it.note ? `<div class="item-tag">${it.note} · 체크하면 냉장고로 이동</div>` : '<div class="item-tag">체크하면 냉장고 재고로 이동</div>'}
+            </div>
+            ${it.hasLink ? `<a class="btn-buy" href="#" onclick="demoLink(event, '${it.name}')">쿠팡</a>` : ''}
+            <button class="btn-del" onclick="delItem(${it.id})" aria-label="삭제">✕</button>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }).join('') || '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">장볼 게 다 끝났어요! 산 건 🧊 냉장고 탭에 들어가 있어요.</div>';
+}
+
+function setFridgeFilter(mode, el) {
+  fridgeFilter = mode;
+  el.parentElement.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  renderFridge();
+}
+
+function toggleFridgeFav(id) {
+  const fridge = loadFridge().map(f => f.id === id ? { ...f, fav: !f.fav } : f);
+  saveFridge(fridge);
+  renderFridge();
+}
+
+function renderFridge() {
+  const allFridge = loadFridge();
+  const fridge = fridgeFilter === 'fav' ? allFridge.filter(f => f.fav) : allFridge;
+  const places = ['냉장', '냉동', '실온'];
+  const box = document.getElementById('fridgeList');
+  box.innerHTML = places.map(p => {
+    const list = fridge.filter(f => f.place === p);
+    if (!list.length) return '';
+    return `
+      <div class="card">
+        <div class="cat-title"><span>${p === '냉장' ? '❄️ 냉장실' : p === '냉동' ? '🧊 냉동실' : '🧺 실온·팬트리'}</span><span>${list.length}개</span></div>
+        ${list.map(f => {
+          const cls = f.status === '많음' ? 'stock-full' : f.status === '절반' ? 'stock-half' : 'stock-low';
+          return `
+            <div class="item-row">
+              <button class="btn-fav" style="font-size:17px;" onclick="toggleFridgeFav(${f.id})" aria-label="상비템 즐겨찾기">${f.fav ? '⭐' : '☆'}</button>
+              <div class="item-info">
+                <div class="item-name">${f.name}</div>
+                <div class="item-tag">상태 눌러서 변경 (많음→절반→거의 다 씀)</div>
+              </div>
+              <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})">${f.status}</button>
+              <button class="btn-readd" onclick="sendToCart(${f.id})">다 먹음→장보기</button>
+              <button class="btn-del" onclick="delFridge(${f.id})" aria-label="삭제">✕</button>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }).join('') || '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">해당하는 식재료가 없어요!</div>';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 2000);
+}
+
+renderQuicks();
+render();
+renderFridge();
+renderRecipes();
+renderPicks();
+</script>
+</body>
+</html>
