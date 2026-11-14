@@ -3,8 +3,8 @@
   "short_name": "아기먹거리",
   "start_url": "/baby-food/",
   "display": "standalone",
-  "theme_color": "#ff6b35",
-  "background_color": "#fffbf7",
+  "theme_color": "#f4e8d8",
+  "background_color": "#faf5ed",
   "icons": [
     {
       "src": "icon-512.png",
