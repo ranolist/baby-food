@@ -1,0 +1,15 @@
+{
+  "name": "오늘 뭐 먹이지?",
+  "short_name": "아기먹거리",
+  "start_url": "/baby-food/",
+  "display": "standalone",
+  "theme_color": "#ff6b35",
+  "background_color": "#fffbf7",
+  "icons": [
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
