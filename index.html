@@ -309,11 +309,12 @@
   .sync-status.saving { color: var(--amber); }
   .sync-status.offline { color: var(--red); }
 
-  /* ── 카톡용 장보기 복사 ── */
-  .cart-actions { display: flex; gap: 6px; margin-bottom: 10px; }
+  /* ── 카톡용 장보기 복사 (상단 액션 줄) ── */
+  .cart-actions { display: flex; gap: 6px; margin-bottom: 10px; justify-content: flex-end; }
   .btn-kakao {
     flex: 1; background: #f7e58c; color: #4a3f22; border: 1.5px solid #e8d478;
-    border-radius: 14px; padding: 10px 8px; font-size: 12px; font-weight: 800;
+    border-radius: 14px; padding: 9px 6px; font-size: 11.5px; font-weight: 800;
+    line-height: 1.25; word-break: keep-all;
     cursor: pointer; font-family: inherit; box-shadow: 0 2px 7px rgba(180, 160, 60, 0.16);
   }
 
@@ -393,6 +394,7 @@
     <button class="family-badge" id="familyBadge" onclick="openFamilyModal()">👨‍👩‍👧 가족 연결</button>
     <div class="header-btns">
       <button class="btn-bulk" onclick="openBulk()">📥 복붙 추가</button>
+      <button class="btn-kakao" onclick="copyKakaoShopping()">💬 카톡용 장보기 복사</button>
     </div>
   </header>
 
@@ -430,7 +432,6 @@
     </div>
 
     <div class="cart-actions">
-      <button class="btn-kakao" onclick="copyKakaoShopping()">💬 카톡용 장보기 복사</button>
       <button class="btn-clear-all" onclick="clearCartAll()">🗑️ 전체 비우기</button>
     </div>
     <div id="cartList"></div>
