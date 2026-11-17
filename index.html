@@ -216,8 +216,8 @@
   }
   .zone-btn:active { background: #E4E9DE; }
   .zone-btn.on {
-    background: var(--card); color: var(--sage-deep);
-    box-shadow: 0 1px 3px rgba(95, 122, 97, 0.16);
+    background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6;
+    box-shadow: 0 1px 4px rgba(95, 122, 97, 0.26);
   }
   @keyframes zonePop {
     0% { background: #E4EDE2; }
@@ -1301,7 +1301,7 @@ function renderFridge() {
           const zoneChips = ZONE_KEYS.map(z => {
             const on = f.place === z;
             const zi = ZONE_LABELS[z];
-            return `<button class="zone-btn${on ? ' on' : ''}" onclick="moveZone(${f.id}, '${z}')" aria-pressed="${on}" aria-label="${f.name} ${zi.section}${on ? ' 현재 위치' : '으로 옮기기'}"><span aria-hidden="true">${zi.icon}</span>${zi.short}</button>`;
+            return `<button class="zone-btn${on ? ' on' : ''}" onclick="moveZone(${f.id}, '${z}')" aria-pressed="${on}" aria-label="${f.name} ${zi.section}${on ? ' 현재 위치' : '로 옮기기'}"><span aria-hidden="true">${zi.icon}</span>${zi.short}</button>`;
           }).join('');
           return `
             <div class="item-row${zoneFlash === f.id ? ' just-moved' : ''}">
