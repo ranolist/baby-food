@@ -1,11 +1,17 @@
 {
-  "name": "오늘 뭐 먹이지?",
-  "short_name": "아기먹거리",
+  "name": "집밥수첩",
+  "short_name": "집밥수첩",
+  "description": "우리집 아기 먹거리·장보기 — 장보기 체크부터 냉장고 재고, 유아식 레시피까지 한 화면에",
   "start_url": "/baby-food/",
   "display": "standalone",
   "theme_color": "#f4e8d8",
   "background_color": "#faf5ed",
   "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
