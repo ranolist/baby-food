@@ -198,6 +198,34 @@
   .stock-half { background: var(--amber-soft); color: var(--amber); }
   .stock-low { background: var(--red-soft); color: var(--red); }
 
+  /* ── 보관 위치 이동 (냉장·냉동·실온) ── */
+  .fridge-hint {
+    font-size: 11px; color: var(--sub); line-height: 1.45; word-break: keep-all;
+    margin: 0 3px 9px;
+  }
+  .zone-move {
+    display: inline-flex; align-items: center; gap: 1px; flex-shrink: 0;
+    background: #F4F2EC; border: 1.5px solid var(--line); border-radius: 999px; padding: 2px;
+  }
+  .zone-btn {
+    border: none; background: none; border-radius: 999px; padding: 3px 6px;
+    font-size: 10px; font-weight: 800; color: #98A094; cursor: pointer;
+    font-family: inherit; line-height: 1.25; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 1px;
+    transition: background .12s ease, color .12s ease;
+  }
+  .zone-btn:active { background: #E4E9DE; }
+  .zone-btn.on {
+    background: var(--card); color: var(--sage-deep);
+    box-shadow: 0 1px 3px rgba(95, 122, 97, 0.16);
+  }
+  @keyframes zonePop {
+    0% { background: #E4EDE2; }
+    70% { background: #EEF3EA; }
+    100% { background: rgba(255, 255, 255, 0); }
+  }
+  .item-row.just-moved { animation: zonePop 1.2s ease-out; border-radius: 12px; }
+
   /* 레시피 카드 */
   .recipe-filter { display: flex; gap: 6px; margin-bottom: 10px; }
   .fbtn {
@@ -495,6 +523,7 @@
       <input type="text" id="fridgeName" placeholder="지금 있는 식재료 추가">
       <button class="btn-add" onclick="addFridge()">추가</button>
     </div>
+    <div class="fridge-hint">칩을 누르면 보관 위치(냉장·냉동·실온)와 상태가 바로 바뀌어요.</div>
     <div id="fridgeList"></div>
   </div>
 
@@ -892,6 +921,31 @@ function addFridge() {
   showToast('우리집에 추가했어요!');
 }
 
+// 보관 위치(냉장·냉동·실온) 이동
+const ZONE_LABELS = {
+  냉장: { short: '냉장', icon: '❄️', section: '냉장실' },
+  냉동: { short: '냉동', icon: '🧊', section: '냉동실' },
+  실온: { short: '실온', icon: '🧺', section: '실온·팬트리' }
+};
+const ZONE_KEYS = ['냉장', '냉동', '실온'];
+let zoneFlash = null;
+let zoneFlashTimer = null;
+
+function moveZone(id, zone) {
+  const info = ZONE_LABELS[zone];
+  if (!info) return;
+  const list = loadFridge();
+  const target = list.find(f => f.id === id);
+  if (!target) return;
+  if (target.place === zone) { showToast(`${info.section}에 이미 있어요`); return; }
+  saveFridge(list.map(f => f.id === id ? { ...f, place: zone } : f));
+  zoneFlash = id;
+  clearTimeout(zoneFlashTimer);
+  zoneFlashTimer = setTimeout(() => { zoneFlash = null; }, 1200);
+  renderFridge();
+  showToast(`${info.icon} ${info.section}로 옮겼어요`);
+}
+
 function cycleStock(id) {
   const order = ['많음', '절반', '거의 다 씀'];
   const fridge = loadFridge().map(f => {
@@ -1244,15 +1298,20 @@ function renderFridge() {
         <div class="cat-title"><span>${p === '냉장' ? '❄️ 냉장실' : p === '냉동' ? '🧊 냉동실' : '🧺 실온·팬트리'}</span><span>${list.length}개</span></div>
         ${list.map(f => {
           const cls = f.status === '많음' ? 'stock-full' : f.status === '절반' ? 'stock-half' : 'stock-low';
+          const zoneChips = ZONE_KEYS.map(z => {
+            const on = f.place === z;
+            const zi = ZONE_LABELS[z];
+            return `<button class="zone-btn${on ? ' on' : ''}" onclick="moveZone(${f.id}, '${z}')" aria-pressed="${on}" aria-label="${f.name} ${zi.section}${on ? ' 현재 위치' : '으로 옮기기'}"><span aria-hidden="true">${zi.icon}</span>${zi.short}</button>`;
+          }).join('');
           return `
-            <div class="item-row">
+            <div class="item-row${zoneFlash === f.id ? ' just-moved' : ''}">
               <button class="btn-fav" style="font-size:17px;" onclick="toggleFridgeFav(${f.id})" aria-label="상비템 즐겨찾기">${f.fav ? '⭐' : '☆'}</button>
               <div class="item-info">
                 <div class="item-name">${f.name}</div>
                 <div class="fridge-tools">
-                  <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})">${f.status}</button>
+                  <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})" aria-label="${f.name} 상태 변경 (현재 ${f.status})">${f.status}</button>
+                  <div class="zone-move" role="group" aria-label="${f.name} 보관 위치 이동">${zoneChips}</div>
                   <button class="btn-readd" onclick="sendToCart(${f.id})">다 먹음→장보기</button>
-                  <span class="item-tag" style="margin:0;">눌러서 상태 변경</span>
                 </div>
               </div>
               <button class="btn-del" onclick="delFridge(${f.id})" aria-label="삭제">✕</button>
