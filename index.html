@@ -22,26 +22,31 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" href="favicon.ico" sizes="any">
-<meta name="theme-color" content="#f4e8d8">
+<meta name="theme-color" content="#F7F5F0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="집밥수첩">
 <style>
   :root {
-    --bg: #faf5ed;
-    --card: #fffdf9;
-    --text: #3e2f23;
-    --sub: #8a7866;
-    --accent: #b87344;
-    --accent-soft: #f6ebe0;
-    --green: #6b8a68;
-    --green-soft: #edf3ec;
-    --amber: #b07b3a;
-    --amber-soft: #fbf0dd;
-    --red: #b8563c;
-    --red-soft: #fbe9e2;
-    --line: #e8dccb;
-    --line-soft: #f2e9dc;
+    /* 🌿 세이지 그린 + 오트밀 화이트 */
+    --bg: #F7F5F0;
+    --card: #FFFFFF;
+    --card-soft: #FCFAF6;
+    --text: #3A3D39;
+    --sub: #7A8178;
+    --accent: #5F7A61;
+    --accent-soft: #E9EFE9;
+    --green: #5F7A61;
+    --green-soft: #E9EFE9;
+    --sage: #5F7A61;
+    --sage-deep: #4A604C;
+    --sage-line: #D6E0D5;
+    --amber: #92794A;
+    --amber-soft: #F4EFE2;
+    --red: #A85D4E;
+    --red-soft: #F7EAE5;
+    --line: #E3E1D7;
+    --line-soft: #EFEDE4;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
@@ -50,35 +55,36 @@
     color: var(--text);
     background-color: var(--bg);
     background-image:
-      radial-gradient(circle at 10% 4%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0) 42%),
-      radial-gradient(circle at 92% 96%, rgba(232, 220, 203, 0.5) 0, rgba(232, 220, 203, 0) 46%);
+      radial-gradient(circle at 8% 2%, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0) 44%),
+      radial-gradient(circle at 94% 98%, rgba(233, 239, 233, 0.9) 0, rgba(233, 239, 233, 0) 46%),
+      linear-gradient(180deg, #F9F7F2 0%, #F4F2EB 100%);
     background-attachment: fixed;
     padding-bottom: 92px;
   }
   .wrap { max-width: 460px; margin: 0 auto; padding: 16px; }
 
-  /* ── 헤더: 따뜻한 크림 그라데이션 + 아이콘 썸네일 ── */
+  /* ── 헤더: 세이지 그린 → 오트밀 그라데이션 + 아이콘 썸네일 ── */
   header {
     display: flex; flex-wrap: wrap; gap: 10px;
-    background: linear-gradient(135deg, #f4e8d8 0%, #ecdcc6 100%);
-    border: 1.5px solid #e6d6bf;
+    background: linear-gradient(135deg, #F4F6F0 0%, #E9EFE9 58%, #F1EFE6 100%);
+    border: 1.5px solid #DCE4DB;
     border-radius: 24px 20px 26px 22px;
     padding: 14px 15px;
     margin-bottom: 12px;
-    box-shadow: 0 3px 12px rgba(126, 104, 78, 0.08);
+    box-shadow: 0 3px 12px rgba(74, 96, 76, 0.09);
   }
   .brand { display: flex; align-items: center; gap: 10px; flex: 1 1 auto; min-width: 0; }
   .brand-icon {
     width: 44px; height: 44px; border-radius: 14px; flex-shrink: 0;
-    border: 1.5px solid #e2d2ba; background: #faf0dc;
-    box-shadow: 0 2px 6px rgba(126, 104, 78, 0.14);
+    border: 1.5px solid #DCE4DB; background: #F4F6F0;
+    box-shadow: 0 2px 6px rgba(74, 96, 76, 0.14);
     object-fit: cover;
   }
   header h1 { font-size: 18px; font-weight: 800; margin: 0 0 2px; letter-spacing: -0.4px; color: var(--text); }
-  header p { font-size: 11.5px; color: #7a6549; margin: 0; }
+  header p { font-size: 11.5px; color: #6E7A6C; margin: 0; }
   .header-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; width: 100%; }
   .btn-bulk {
-    flex: 1; background: var(--card); color: #7a5a3d; border: 1.5px solid #e0cfb6;
+    flex: 1; background: var(--card); color: var(--sage-deep); border: 1.5px solid var(--sage-line);
     border-radius: 14px; padding: 9px 10px; font-size: 12px; font-weight: 800; cursor: pointer;
     font-family: inherit; min-width: 0;
   }
@@ -90,14 +96,14 @@
     white-space: nowrap; font-family: inherit;
   }
   .tab.active {
-    background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef; border-color: #b87344;
-    box-shadow: 0 3px 10px rgba(184, 115, 68, 0.22);
+    background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6; border-color: #5F7A61;
+    box-shadow: 0 3px 10px rgba(95, 122, 97, 0.22);
   }
 
   .card {
     background: var(--card); border-radius: 22px 18px 23px 19px; padding: 15px 16px;
     border: 1.5px solid var(--line); margin-bottom: 12px;
-    box-shadow: 0 2px 10px rgba(126, 104, 78, 0.05);
+    box-shadow: 0 2px 10px rgba(58, 61, 57, 0.05);
   }
   .cat-title {
     font-size: 12.5px; font-weight: 800; color: var(--sub); margin: 0 0 8px;
@@ -105,13 +111,13 @@
   }
 
   .quick-box {
-    background: var(--card); border: 1.5px dashed #ddcbb3; border-radius: 18px;
+    background: var(--card-soft); border: 1.5px dashed #D9DFD3; border-radius: 18px;
     padding: 11px 12px; margin-bottom: 12px;
   }
   .quick-label { font-size: 11.5px; font-weight: 800; color: var(--sub); margin-bottom: 8px; }
   .quick-chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .qchip {
-    border: 1.5px solid #ecdcc6; background: var(--accent-soft); color: #8a5a35;
+    border: 1.5px solid var(--sage-line); background: var(--accent-soft); color: var(--sage-deep);
     border-radius: 999px; padding: 6px 11px; font-size: 12px; font-weight: 700;
     cursor: pointer; font-family: inherit;
   }
@@ -122,9 +128,9 @@
   }
   .item-row:last-child { border-bottom: none; padding-bottom: 2px; }
   .chk {
-    width: 22px; height: 22px; border-radius: 8px; border: 2px solid #ddcbb3;
+    width: 22px; height: 22px; border-radius: 8px; border: 2px solid #D5DCCF;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
-    flex-shrink: 0; font-size: 13px; font-weight: 800; color: #fff8ef; background: var(--card);
+    flex-shrink: 0; font-size: 13px; font-weight: 800; color: #F7FAF6; background: var(--card);
   }
   .chk.checked { background: var(--accent); border-color: var(--accent); }
   .item-info { flex: 1; min-width: 0; cursor: pointer; }
@@ -132,36 +138,36 @@
   .item-tag { font-size: 11px; color: var(--sub); margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .fridge-tools { display: flex; align-items: center; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
   .btn-buy {
-    text-decoration: none; background: var(--accent-soft); color: var(--accent);
-    border: 1.5px solid #ecdcc6; border-radius: 10px; padding: 5px 8px;
+    text-decoration: none; background: var(--accent-soft); color: var(--sage-deep);
+    border: 1.5px solid var(--sage-line); border-radius: 10px; padding: 5px 8px;
     font-size: 10.5px; font-weight: 800; white-space: nowrap; cursor: pointer;
   }
   .btn-readd {
-    background: var(--accent-soft); color: var(--accent); border: 1.5px solid #ecdcc6;
+    background: var(--accent-soft); color: var(--sage-deep); border: 1.5px solid var(--sage-line);
     border-radius: 9px; padding: 5px 8px; font-size: 10.5px; font-weight: 700; cursor: pointer;
     font-family: inherit; white-space: nowrap;
   }
   .btn-del {
-    background: none; border: none; color: #cbbba6; font-size: 14px; cursor: pointer; padding: 2px 3px;
+    background: none; border: none; color: #B9C0B4; font-size: 14px; cursor: pointer; padding: 2px 3px;
   }
   .clear-row { display: flex; justify-content: flex-end; margin-bottom: 8px; }
   .btn-clear-all {
-    background: var(--card); border: 1.5px solid #ecd2c7; color: var(--red); border-radius: 999px;
+    background: var(--card); border: 1.5px solid #E6D5CD; color: var(--red); border-radius: 999px;
     padding: 5px 11px; font-size: 11.5px; font-weight: 700; cursor: pointer; font-family: inherit;
   }
 
   /* ── 수량 조절 (− 1 +) ── */
   .qty-ctrl {
     display: inline-flex; align-items: center; gap: 1px; flex-shrink: 0;
-    background: #f9f2e8; border: 1.5px solid var(--line); border-radius: 999px; padding: 2px;
+    background: #F4F2EC; border: 1.5px solid var(--line); border-radius: 999px; padding: 2px;
   }
   .qty-btn {
     width: 21px; height: 21px; border: none; border-radius: 50%; background: var(--card);
-    color: var(--accent); font-size: 14px; font-weight: 800; line-height: 1;
+    color: var(--sage); font-size: 14px; font-weight: 800; line-height: 1;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
-    font-family: inherit; padding: 0; box-shadow: 0 1px 2px rgba(126, 104, 78, 0.08);
+    font-family: inherit; padding: 0; box-shadow: 0 1px 2px rgba(58, 61, 57, 0.08);
   }
-  .qty-btn:disabled { color: #d8c9b6; box-shadow: none; }
+  .qty-btn:disabled { color: #CFD3C9; box-shadow: none; }
   .qty-num {
     min-width: 15px; text-align: center; font-size: 11.5px; font-weight: 800;
     color: var(--text); font-variant-numeric: tabular-nums;
@@ -172,15 +178,15 @@
     flex: 1; min-width: 0; border: 1.5px solid var(--line); border-radius: 14px; padding: 11px 12px;
     font-size: 13px; font-family: inherit; background: var(--card); color: var(--text);
   }
-  .add-bar input::placeholder { color: #b3a493; }
+  .add-bar input::placeholder { color: #A8AFA5; }
   .add-bar select {
     border: 1.5px solid var(--line); border-radius: 14px; padding: 0 8px;
     font-size: 12px; font-weight: 600; background: var(--card); font-family: inherit; color: var(--text);
   }
   .btn-add {
-    background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef; border: none; border-radius: 14px;
+    background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6; border: none; border-radius: 14px;
     padding: 0 13px; font-size: 12.5px; font-weight: 800; cursor: pointer; font-family: inherit;
-    white-space: nowrap; box-shadow: 0 2px 7px rgba(184, 115, 68, 0.2);
+    white-space: nowrap; box-shadow: 0 2px 7px rgba(95, 122, 97, 0.2);
   }
 
   /* 우리집 재고 상태 */
@@ -199,7 +205,7 @@
     background: var(--card); font-size: 12px; font-weight: 700; color: var(--sub); cursor: pointer;
     font-family: inherit;
   }
-  .fbtn.active { background: var(--text); color: #fff8ef; border-color: var(--text); }
+  .fbtn.active { background: var(--sage-deep); color: #F7FAF6; border-color: var(--sage-deep); }
   .recipe-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
   .btn-fav {
     background: none; border: none; font-size: 19px; cursor: pointer; padding: 0 2px; line-height: 1;
@@ -207,8 +213,8 @@
   .recipe-title { font-size: 15px; font-weight: 800; margin: 0 0 3px; line-height: 1.3; }
   .recipe-meta { font-size: 11.5px; color: var(--sub); }
   .recipe-steps {
-    font-size: 13px; line-height: 1.6; color: #5b4a3a;
-    background: #f9f2e8; border: 1px dashed #ecdfcc; border-radius: 14px;
+    font-size: 13px; line-height: 1.6; color: #4E5A4C;
+    background: var(--card-soft); border: 1px dashed #E2E6DC; border-radius: 14px;
     padding: 10px 12px; margin: 9px 0 10px;
   }
   .ing-row { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -218,10 +224,41 @@
     cursor: pointer; font-family: inherit;
   }
 
+  /* ── 🏠 우리집 재료 매칭 ── */
+  .home-bar {
+    display: flex; flex-direction: column; gap: 8px;
+    background: linear-gradient(135deg, #F3F6F1 0%, #E9EFE9 100%);
+    border: 1.5px solid #DCE4DB; border-radius: 18px;
+    padding: 10px 11px; margin-bottom: 12px;
+  }
+  .home-toggle {
+    width: 100%; display: flex; align-items: center; justify-content: center; gap: 6px;
+    border: 1.5px solid #CFDACC; background: var(--card); color: var(--sage-deep);
+    border-radius: 14px; padding: 10px 8px; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: inherit; min-width: 0; line-height: 1.3;
+    transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+  }
+  .home-toggle.on {
+    background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6; border-color: #5F7A61;
+    box-shadow: 0 2px 8px rgba(95, 122, 97, 0.22);
+  }
+  .home-hint { font-size: 11px; color: #6E7A6C; line-height: 1.45; text-align: center; word-break: keep-all; }
+  .match-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 7px 0 0; }
+  .match-badge { font-size: 11px; font-weight: 800; border-radius: 999px; padding: 4px 9px; line-height: 1.35; }
+  .match-ready { background: var(--sage); color: #F7FAF6; box-shadow: 0 2px 6px rgba(95, 122, 97, 0.18); }
+  .match-part { background: var(--sage-soft); color: var(--sage-deep); border: 1.5px solid var(--sage-line); }
+  .match-none { background: #F1F2EA; color: #808779; border: 1.5px solid var(--line); }
+  .btn-miss {
+    border: 1.5px solid #CFDACC; background: var(--card); color: var(--sage-deep);
+    border-radius: 999px; padding: 4px 10px; font-size: 11px; font-weight: 800;
+    cursor: pointer; font-family: inherit; line-height: 1.35;
+  }
+  .btn-miss:active { background: var(--sage-soft); }
+
   /* 추천템 탭 */
   .kr-banner {
-    background: #f3ece1; border: 1.5px solid #e6dac8; border-radius: 14px;
-    padding: 10px 12px; font-size: 12px; color: #6f5a42; font-weight: 600;
+    background: #F1F2EA; border: 1.5px solid #DFE4D8; border-radius: 14px;
+    padding: 10px 12px; font-size: 12px; color: #5C6659; font-weight: 600;
     margin-bottom: 12px; line-height: 1.45;
   }
   .pick-card {
@@ -237,13 +274,13 @@
   .pick-desc { font-size: 12px; color: var(--sub); line-height: 1.45; }
   .kr-actions { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
   .btn-mini-add {
-    background: #f4ece1; color: #6f5a42; border: 1.5px solid #e6dac8; border-radius: 9px;
+    background: #EFF2EA; color: var(--sage-deep); border: 1.5px solid #DEE3D7; border-radius: 9px;
     padding: 5px 8px; font-size: 10.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
     font-family: inherit;
   }
 
   .modal-bg {
-    position: fixed; inset: 0; background: rgba(62, 47, 35, 0.42);
+    position: fixed; inset: 0; background: rgba(58, 61, 57, 0.42);
     display: none; align-items: flex-end; justify-content: center; z-index: 90;
   }
   .modal-bg.open { display: flex; }
@@ -257,13 +294,13 @@
   .modal textarea {
     width: 100%; height: 120px; border: 1.5px solid var(--line); border-radius: 14px;
     padding: 10px; font-size: 13px; font-family: inherit; margin-bottom: 10px;
-    background: #fdf9f3; color: var(--text);
+    background: var(--card-soft); color: var(--text);
   }
-  .modal input::placeholder, .modal textarea::placeholder { color: #b3a493; }
+  .modal input::placeholder, .modal textarea::placeholder { color: #A8AFA5; }
   .modal-btns { display: flex; gap: 8px; }
   .btn-m { flex: 1; padding: 12px; border-radius: 14px; border: none; font-size: 14px; font-weight: 700; cursor: pointer; font-family: inherit; }
-  .btn-m.close { background: #f4ece1; color: #6f5a42; }
-  .btn-m.go { background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef; }
+  .btn-m.close { background: #EFF2EA; color: #4E5A48; }
+  .btn-m.go { background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6; }
 
   .ftc-notice {
     font-size: 11px; color: var(--sub); text-align: center; line-height: 1.55;
@@ -275,34 +312,34 @@
     border-radius: 12px; font-weight: 600; word-break: keep-all;
   }
   .pick-live {
-    background: #fff8ef; border: 1.5px solid #ecdcc6; border-radius: 16px;
+    background: #F8FAF6; border: 1.5px solid var(--sage-line); border-radius: 16px;
     padding: 12px 10px; margin-bottom: 8px;
-    box-shadow: 0 2px 8px rgba(184, 115, 68, 0.08);
+    box-shadow: 0 2px 8px rgba(95, 122, 97, 0.08);
   }
   .pick-live-tag {
     display: inline-block; font-size: 10px; font-weight: 800; padding: 2px 7px;
-    border-radius: 7px; background: var(--accent-soft); color: var(--accent); margin: 0 0 4px 4px;
+    border-radius: 7px; background: var(--accent-soft); color: var(--sage-deep); margin: 0 0 4px 4px;
   }
   .btn-buy.btn-buy-live {
-    background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef;
-    border-color: #b87344; padding: 7px 10px; font-size: 11px;
-    box-shadow: 0 2px 7px rgba(184, 115, 68, 0.2);
+    background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6;
+    border-color: #5F7A61; padding: 7px 10px; font-size: 11px;
+    box-shadow: 0 2px 7px rgba(95, 122, 97, 0.2);
   }
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
-    background: var(--text); color: #fdf7ee; padding: 10px 16px; border-radius: 999px;
+    background: #3A3D39; color: #F7F5F0; padding: 10px 16px; border-radius: 999px;
     font-size: 13px; font-weight: 600; display: none; z-index: 100;
-    box-shadow: 0 4px 14px rgba(62, 47, 35, 0.22); max-width: 86vw; text-align: center;
+    box-shadow: 0 4px 14px rgba(58, 61, 57, 0.22); max-width: 86vw; text-align: center;
   }
 
   /* ── 가족 연결 배지 · 동기화 상태 ── */
   .family-badge {
-    background: rgba(255, 255, 255, 0.72); border: 1.5px solid #e0cfb6; color: #7a5a3d;
+    background: rgba(255, 255, 255, 0.78); border: 1.5px solid #DCE4DB; color: var(--sage-deep);
     border-radius: 999px; padding: 7px 11px; font-size: 11px; font-weight: 800;
     cursor: pointer; font-family: inherit; white-space: nowrap;
     max-width: 48%; overflow: hidden; text-overflow: ellipsis;
   }
-  .family-badge.linked { background: #eef4ec; border-color: #cfe0cb; color: #4f6b4c; }
+  .family-badge.linked { background: #E9EFE9; border-color: #CFDCCC; color: #43583F; }
   .sync-status {
     font-size: 10.5px; font-weight: 700; color: var(--sub);
     text-align: right; padding: 0 6px 8px; margin-top: -2px;
@@ -314,10 +351,11 @@
   /* ── 카톡용 장보기 복사 (상단 액션 줄) ── */
   .cart-actions { display: flex; gap: 6px; margin-bottom: 10px; justify-content: flex-end; }
   .btn-kakao {
-    flex: 1; background: #f7e58c; color: #4a3f22; border: 1.5px solid #e8d478;
-    border-radius: 14px; padding: 9px 6px; font-size: 11.5px; font-weight: 800;
-    line-height: 1.25; min-width: 0;
-    cursor: pointer; font-family: inherit; box-shadow: 0 2px 7px rgba(180, 160, 60, 0.16);
+    flex: 1; background: linear-gradient(135deg, #EAF0EA 0%, #DEE8DE 100%);
+    color: #43583F; border: 1.5px solid #CFDCCC;
+    border-radius: 14px; padding: 9px 8px; font-size: 11.5px; font-weight: 800;
+    line-height: 1.3; min-width: 0;
+    cursor: pointer; font-family: inherit; box-shadow: 0 2px 7px rgba(95, 122, 97, 0.14);
   }
 
   /* ── 아기 반응 한 줄 메모 ── */
@@ -327,7 +365,7 @@
     padding: 9px 3px; font-size: 11.5px; font-weight: 800; color: var(--sub);
     cursor: pointer; font-family: inherit;
   }
-  .react-btn.on { background: var(--accent-soft); border-color: #e2c9ab; color: #8a5a35; }
+  .react-btn.on { background: var(--accent-soft); border-color: #C9D6C6; color: var(--sage-deep); }
   .react-row { display: flex; gap: 5px; margin-top: 8px; align-items: center; flex-wrap: wrap; }
   .react-row .lbl { font-size: 11px; color: var(--sub); font-weight: 700; margin-right: 1px; }
   .react-mini {
@@ -345,32 +383,32 @@
   .rx-no { background: var(--red-soft); color: var(--red); }
   .rx-menu { font-size: 13px; font-weight: 700; line-height: 1.35; word-break: keep-all; }
   .rx-memo { font-size: 11.5px; color: var(--sub); margin-top: 2px; line-height: 1.4; }
-  .rx-time { font-size: 10px; color: #b3a493; margin-top: 2px; }
+  .rx-time { font-size: 10px; color: #B0B6AC; margin-top: 2px; }
 
   .modal input[type="text"] {
     width: 100%; border: 1.5px solid var(--line); border-radius: 14px;
     padding: 11px 12px; font-size: 13px; font-family: inherit;
-    background: #fdf9f3; color: var(--text); margin-bottom: 10px;
+    background: var(--card-soft); color: var(--text); margin-bottom: 10px;
   }
   .family-link {
-    font-size: 11px; color: var(--sub); word-break: break-all; background: #f7f0e6;
-    border: 1px dashed #e4d6c2; border-radius: 12px; padding: 9px 10px;
+    font-size: 11px; color: var(--sub); word-break: break-all; background: #F4F2EC;
+    border: 1px dashed #DFE3D8; border-radius: 12px; padding: 9px 10px;
     margin: 8px 0 10px; line-height: 1.45;
   }
   .btn-invite {
-    width: 100%; background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef;
+    width: 100%; background: linear-gradient(135deg, #6E8A70, #5F7A61); color: #F7FAF6;
     border: none; border-radius: 14px; padding: 12px; font-size: 13.5px; font-weight: 800;
     cursor: pointer; font-family: inherit; margin-bottom: 8px;
-    box-shadow: 0 2px 8px rgba(184, 115, 68, 0.22);
+    box-shadow: 0 2px 8px rgba(95, 122, 97, 0.22);
   }
   .btn-unlink {
-    width: 100%; background: var(--card); color: var(--red); border: 1.5px solid #ecd2c7;
+    width: 100%; background: var(--card); color: var(--red); border: 1.5px solid #E6D5CD;
     border-radius: 14px; padding: 10px; font-size: 12.5px; font-weight: 700;
     cursor: pointer; font-family: inherit;
   }
   .family-hint { margin: 10px 0 0 !important; font-size: 11px !important; }
   .btn-random-code {
-    width: 100%; background: #fdf6ec; color: var(--accent); border: 1.5px dashed #ddc9ad;
+    width: 100%; background: #F8FAF6; color: var(--sage-deep); border: 1.5px dashed #CFDACC;
     border-radius: 14px; padding: 11px; font-size: 13px; font-weight: 800;
     cursor: pointer; font-family: inherit; margin: -2px 0 10px;
     transition: background .15s ease, transform .1s ease;
@@ -419,7 +457,7 @@
       <div class="quick-chips" id="quickChips"></div>
       <div id="quickEditRow" style="display:none;margin-top:8px;gap:6px;">
         <input type="text" id="newQuickName" placeholder="새 단골템 이름 (예: 아기 요거트)" style="flex:1;min-width:0;border:1.5px solid var(--line);border-radius:12px;padding:6px 10px;font-size:12px;font-family:inherit;background:var(--card);">
-        <button onclick="addQuickChip()" style="background:var(--accent);color:#fff8ef;border:none;border-radius:12px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">추가</button>
+        <button onclick="addQuickChip()" style="background:var(--accent);color:#F7FAF6;border:none;border-radius:12px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;">추가</button>
       </div>
     </div>
 
@@ -462,15 +500,19 @@
 
   <!-- Tab 3: Toddler Recipes -->
   <div id="tab-recipe" style="display:none;">
+    <div class="home-bar">
+      <button class="home-toggle" id="homeToggle" aria-pressed="false" onclick="toggleHomeMatch()">🏠 우리집 재료로 만들기</button>
+      <div class="home-hint" id="homeHint">우리집 탭에 있는 재료와 레시피를 자동으로 맞춰드려요.</div>
+    </div>
     <div class="card">
       <div class="cat-title"><span>😋 오늘 먹인 메뉴 기록</span><span id="reactionCount"></span></div>
-      <input type="text" id="reactionMenu" placeholder="먹인 메뉴 (예: 소고기 두부 덮밥)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fdf9f3;color:var(--text);margin-bottom:0;">
+      <input type="text" id="reactionMenu" placeholder="먹인 메뉴 (예: 소고기 두부 덮밥)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;font-family:inherit;background:#FCFAF6;color:var(--text);margin-bottom:0;">
       <div class="react-pick" id="reactPick">
         <button class="react-btn on" data-r="good" onclick="pickReaction('good')">😍 잘 먹음</button>
         <button class="react-btn" data-r="normal" onclick="pickReaction('normal')">🙂 보통</button>
         <button class="react-btn" data-r="no" onclick="pickReaction('no')">😢 거부</button>
       </div>
-      <input type="text" id="reactionMemo" placeholder="한 줄 메모 (예: 애호박은 안 먹음)" maxlength="60" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;font-family:inherit;background:#fdf9f3;color:var(--text);margin-bottom:8px;">
+      <input type="text" id="reactionMemo" placeholder="한 줄 메모 (예: 애호박은 안 먹음)" maxlength="60" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;font-size:13px;font-family:inherit;background:#FCFAF6;color:var(--text);margin-bottom:8px;">
       <button class="btn-add" style="width:100%;padding:11px;" onclick="saveReaction()">기록 저장</button>
       <div id="reactionList" style="margin-top:6px;"></div>
     </div>
@@ -523,8 +565,8 @@
   <div class="modal">
     <h3>🍳 새 유아식 레시피 추가</h3>
     <p>재료를 쉼표(,)로 적으면 장보기 담기 버튼이 자동으로 생겨요.</p>
-    <input type="text" id="rTitle" placeholder="요리 이름 (예: 🍲 순두부 계란국)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;background:#fdf9f3;color:var(--text);">
-    <input type="text" id="rIngs" placeholder="재료 쉼표로 구분 (예: 순두부, 계란, 아기 육수)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;background:#fdf9f3;color:var(--text);">
+    <input type="text" id="rTitle" placeholder="요리 이름 (예: 🍲 순두부 계란국)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;background:#FCFAF6;color:var(--text);">
+    <input type="text" id="rIngs" placeholder="재료 쉼표로 구분 (예: 순두부, 계란, 아기 육수)" style="width:100%;border:1.5px solid var(--line);border-radius:14px;padding:10px;font-size:13px;font-family:inherit;margin-bottom:8px;background:#FCFAF6;color:var(--text);">
     <textarea id="rSteps" placeholder="만드는 법을 편하게 적어주세요" style="height:90px;"></textarea>
     <div class="modal-btns">
       <button class="btn-m close" onclick="closeRecipeModal()">닫기</button>
@@ -569,6 +611,7 @@ const FAMILY_KEY = 'baby_food_family_v1';
 const SB_URL = 'https://yvfzxirhmxohslaubukx.supabase.co';
 const SB_KEY = 'sb_publishable_eTvhACaQZzykagXF_u0ntw_rwy6fJVS';
 let recipeFilter = 'all';
+let recipeHomeMode = false;
 let fridgeFilter = 'all';
 let pickFilter = 'all';
 let quickEditMode = false;
@@ -619,7 +662,7 @@ function renderQuicks() {
   const box = document.getElementById('quickChips');
   box.innerHTML = list.map(([cat, name], idx) =>
     quickEditMode
-      ? `<span class="qchip" style="display:inline-flex;align-items:center;gap:4px;background:#fff1f2;border-color:#fecdd3;color:#be123c;">${name} <button onclick="delQuickChip(${idx})" style="background:none;border:none;color:#be123c;font-weight:800;cursor:pointer;padding:0;">✕</button></span>`
+      ? `<span class="qchip" style="display:inline-flex;align-items:center;gap:4px;background:#F7EAE5;border-color:#E6D5CD;color:#A85D4E;">${name} <button onclick="delQuickChip(${idx})" style="background:none;border:none;color:#A85D4E;font-weight:800;cursor:pointer;padding:0;">✕</button></span>`
       : `<button class="qchip" onclick="quickAdd('${cat}', '${name}')">+ ${name}</button>`
   ).join('');
 }
@@ -778,6 +821,7 @@ function buyItem(id) {
   saveFridge(fridge);
   render();
   renderFridge();
+  renderRecipes();
   showToast(`'${target.name}' 🏠 우리집에 넣어뒀어요!`);
 }
 
@@ -809,6 +853,7 @@ function clearFridgeAll() {
   if (!confirm('우리집 목록을 전부 비울까요?')) return;
   saveFridge([]);
   renderFridge();
+  renderRecipes();
   showToast('우리집 목록을 싹 비웠어요!');
 }
 
@@ -843,6 +888,7 @@ function addFridge() {
   saveFridge(fridge);
   document.getElementById('fridgeName').value = '';
   renderFridge();
+  renderRecipes();
   showToast('우리집에 추가했어요!');
 }
 
@@ -864,11 +910,13 @@ function sendToCart(id) {
   saveFridge(fridge.filter(f => f.id !== id));
   quickAdd('반찬·식재료', target.name);
   renderFridge();
+  renderRecipes();
 }
 
 function delFridge(id) {
   saveFridge(loadFridge().filter(f => f.id !== id));
   renderFridge();
+  renderRecipes();
 }
 
 // Bulk paste
@@ -952,29 +1000,165 @@ function toggleFav(id) {
 }
 function setRecipeFilter(mode, el) {
   recipeFilter = mode;
-  document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+  (el.parentElement || document).querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
   el.classList.add('active');
   renderRecipes();
 }
+
+/* ═══════════ 🏠 우리집 재료 매칭 (한글 부분 일치) ═══════════ */
+// 레시피 재료명과 우리집 재고 이름을 같은 식재료로 묶기 위한 핵심 식재료 사전
+const FOOD_NOUNS = [
+  '소고기', '쇠고기', '한우', '불고기', '닭가슴살', '닭다리살', '닭고기', '닭',
+  '돼지고기', '삼겹살', '목살', '계란', '달걀', '유정란', '왕란', '특란', '메추리알',
+  '두부', '순두부', '연두부', '애호박', '단호박', '호박', '양파', '대파', '쪽파', '당근',
+  '감자', '고구마', '오이', '파프리카', '피망', '브로콜리', '콜리플라워', '시금치', '깻잎',
+  '상추', '양배추', '배추', '김치', '백김치', '토마토', '방울토마토', '아보카도', '바나나',
+  '사과', '배', '딸기', '블루베리', '키위', '망고', '포도', '수박', '귤', '오렌지',
+  '오트밀', '현미', '쌀', '잡곡', '밀가루', '떡', '만두', '국수', '파스타', '빵',
+  '참기름', '들기름', '올리브유', '식용유', '간장', '된장', '고추장', '소금', '설탕', '꿀',
+  '아기김', '김', '미역', '다시마', '멸치', '육수', '치즈', '우유', '요거트', '요구르트',
+  '버터', '크림', '콩', '검은콩', '렌틸콩', '병아리콩', '완두콩', '옥수수', '새우', '고등어',
+  '연어', '대구', '명태', '조기', '굴', '조개', '마늘', '생강', '참깨', '호두', '아몬드',
+  '땅콩', '잣', '건포도', '대추', '바질', '로즈마리', '올리브', '무', '열무', '부추', '숙주'
+];
+const FOOD_ALIAS = {
+  '달걀': '계란', '유정란': '계란', '왕란': '계란', '특란': '계란',
+  '쇠고기': '소고기', '한우': '소고기', '불고기': '소고기',
+  '닭가슴살': '닭고기', '닭다리살': '닭고기', '닭': '닭고기',
+  '아기김': '김', '요구르트': '요거트', '연두부': '두부', '백김치': '김치'
+};
+// '국산·무항생제·소분' 같은 수식어는 매칭에서 빼고 본재료만 본다
+const ING_NOISE = [
+  '무항생제', '국산콩', '국산', '국내산', '제주산', '유기농', '무농약', '친환경', '무첨가',
+  '무염', '저염', '저당', '무당', '아기용', '아기', '유아용', '유아', '키즈', '소분',
+  '냉동', '냉장', '실온', '다진', '큐브', '슬라이스', '채썬', '신선', '1등급', '1급a'
+];
+const FOOD_NOUNS_SORTED = FOOD_NOUNS.slice().sort((a, b) => b.length - a.length);
+
+function normIng(s) {
+  return String(s == null ? '' : s).toLowerCase().replace(/[\s\-_·.,()[\]{}'"~!?/\\+]/g, '');
+}
+function ingNoun(name) {
+  const n = normIng(name);
+  let best = '';
+  for (let i = 0; i < FOOD_NOUNS_SORTED.length; i++) {
+    const noun = FOOD_NOUNS_SORTED[i];
+    if (noun.length > best.length && n.indexOf(noun) !== -1) best = noun;
+  }
+  return best ? (FOOD_ALIAS[best] || best) : '';
+}
+function stripIngNoise(name) {
+  let n = normIng(name);
+  for (let i = 0; i < ING_NOISE.length; i++) n = n.split(ING_NOISE[i]).join('');
+  return n;
+}
+// '국산 소고기 다짐육' ↔ '소분 소고기 큐브', '달걀' ↔ '계란'처럼 유연하게 비교
+function ingMatch(a, b) {
+  if (!a || !b) return false;
+  const ka = ingNoun(a);
+  const kb = ingNoun(b);
+  if (ka && kb) return ka === kb;
+  if (ka || kb) return normIng(ka ? b : a).indexOf(ka || kb) !== -1;
+  const sa = stripIngNoise(a);
+  const sb = stripIngNoise(b);
+  if (!sa || !sb) return false;
+  if (sa === sb) return true;
+  if (sa.length < 2 || sb.length < 2) return false;
+  return sa.indexOf(sb) !== -1 || sb.indexOf(sa) !== -1;
+}
+function matchRecipe(recipe, fridgeNames) {
+  const ings = (recipe && recipe.ings) || [];
+  const have = [];
+  const miss = [];
+  ings.forEach(pair => {
+    const name = pair[1];
+    if (fridgeNames.some(f => ingMatch(f, name))) have.push(name);
+    else miss.push(name);
+  });
+  return { total: ings.length, have: have, miss: miss, ready: ings.length > 0 && miss.length === 0 };
+}
+function matchRatio(m) {
+  return m.total ? m.have.length / m.total : 0;
+}
+function toggleHomeMatch() {
+  recipeHomeMode = !recipeHomeMode;
+  renderRecipes();
+  showToast(recipeHomeMode ? '🏠 우리집 재료로 만들 수 있는 레시피만 모았어요' : '전체 레시피로 돌아왔어요');
+}
+// 부족한 재료만 원터치로 장보기 담기
+function addMissingToCart(recipeId) {
+  const r = loadRecipes().find(x => x.id === recipeId);
+  if (!r) return;
+  const { miss } = matchRecipe(r, loadFridge().map(f => f.name));
+  if (!miss.length) { showToast('부족한 재료가 없어요 — 바로 만들 수 있어요 ✅'); return; }
+  const items = loadItems();
+  let added = 0;
+  miss.forEach((name, i) => {
+    if (items.some(it => it.name === name)) return;
+    const pair = ((r.ings || []).find(p => p[1] === name)) || ['반찬·식재료', name];
+    items.unshift({ id: Date.now() + i, cat: pair[0], name: name, note: '레시피 부족 재료', hasLink: false, qty: 1 });
+    added++;
+  });
+  if (!added) { showToast('부족한 재료가 이미 장보기 목록에 있어요!'); return; }
+  saveItems(items);
+  render();
+  showToast(`부족한 재료 ${added}가지 장보기에 담았어요! 🛒`);
+}
+
 function renderRecipes() {
   const favs = loadFavs();
   const q = (document.getElementById('recipeSearch')?.value || '').trim().toLowerCase();
-  let list = loadRecipes();
-  if (recipeFilter === 'fav') list = list.filter(r => favs.includes(r.id));
+  const fridgeNames = loadFridge().map(f => f.name);
+  const all = loadRecipes().map(r => ({ r: r, m: matchRecipe(r, fridgeNames) }));
+
+  /* 🏠 배너 상태 갱신 */
+  const toggle = document.getElementById('homeToggle');
+  if (toggle) {
+    toggle.classList.toggle('on', recipeHomeMode);
+    toggle.setAttribute('aria-pressed', recipeHomeMode ? 'true' : 'false');
+    toggle.textContent = recipeHomeMode ? '✅ 우리집 재료로 만들기 (켜짐)' : '🏠 우리집 재료로 만들기';
+  }
+  const hint = document.getElementById('homeHint');
+  if (hint) {
+    const ready = all.filter(x => x.m.ready).length;
+    hint.textContent = !fridgeNames.length
+      ? '우리집 탭에 재료를 담으면 만들 수 있는 레시피를 자동으로 위로 모아드려요.'
+      : `우리집 재료 ${fridgeNames.length}가지 기준 · 바로 만들 수 있는 레시피 ${ready}개 / 전체 ${all.length}개`;
+  }
+
+  let list = all;
+  if (recipeFilter === 'fav') list = list.filter(x => favs.includes(x.r.id));
   if (q) {
-    list = list.filter(r =>
-      r.title.toLowerCase().includes(q) ||
-      r.steps.toLowerCase().includes(q) ||
-      r.ings.some(([, n]) => n.toLowerCase().includes(q))
+    list = list.filter(x =>
+      String(x.r.title || '').toLowerCase().includes(q) ||
+      String(x.r.steps || '').toLowerCase().includes(q) ||
+      (x.r.ings || []).some(p => String(p[1]).toLowerCase().includes(q))
     );
   }
+  if (recipeHomeMode) list = list.filter(x => x.m.have.length > 0);
+  list = list.slice().sort((a, b) => matchRatio(b.m) - matchRatio(a.m));
+
   const box = document.getElementById('recipeList');
   if (!list.length) {
-    box.innerHTML = '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">조건에 맞는 레시피가 없어요!</div>';
+    box.innerHTML = `<div class="card" style="text-align:center;color:var(--sub);font-size:13px;line-height:1.6;">${
+      recipeHomeMode
+        ? '우리집 재료로 만들 수 있는 레시피가 아직 없어요.<br>🏠 우리집 탭에 재료를 더 담아보세요!'
+        : '조건에 맞는 레시피가 없어요!'
+    }</div>`;
     return;
   }
-  box.innerHTML = list.map(r => {
+  box.innerHTML = list.map(({ r, m }) => {
     const isFav = favs.includes(r.id);
+    let badge;
+    if (m.ready) {
+      badge = `<span class="match-badge match-ready">✅ 바로 만들기 가능!</span>`;
+    } else if (m.have.length) {
+      badge = `<span class="match-badge match-part">🥬 우리집 재료 ${m.have.length}/${m.total}개 (부족: ${m.miss.map(esc).join(', ')})</span>
+          <button class="btn-miss" onclick="addMissingToCart('${esc(r.id)}')">부족한 재료만 장보기 담기</button>`;
+    } else {
+      badge = `<span class="match-badge match-none">🥬 우리집 재료 0/${m.total}개</span>
+          <button class="btn-miss" onclick="addMissingToCart('${esc(r.id)}')">부족한 재료만 장보기 담기</button>`;
+    }
     return `
       <div class="card">
         <div class="recipe-head">
@@ -987,9 +1171,10 @@ function renderRecipes() {
             ${r.custom ? `<button class="btn-del" onclick="delRecipe('${r.id}')" aria-label="삭제">✕</button>` : ''}
           </div>
         </div>
+        <div class="match-row">${badge}</div>
         <div class="recipe-steps">${r.steps}</div>
         <div class="ing-row">
-          ${r.ings.map(([c, n]) => `<button class="ing-btn" onclick="quickAdd('${c}', '${n}')">+ ${n} 담기</button>`).join('')}
+          ${(r.ings || []).map(([c, n]) => `<button class="ing-btn" onclick="quickAdd('${c}', '${n}')">+ ${n} 담기</button>`).join('')}
         </div>
         <div class="react-row">
           <span class="lbl">아기 반응</span>
