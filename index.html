@@ -174,48 +174,48 @@
 
   /* 🩵 블루 그레이 · 모닝 버터 (맑은 블루 + 버터 옐로) */
   :root[data-theme="butter"] {
-    --bg: #FAF8F1;
-    --bg-top: #FCFAF4;
-    --bg-bottom: #F3F0E6;
-    --glow-rgb: 246, 232, 190;
-    --glow-hi-rgb: 255, 255, 255;
-    --card: #FFFFFF;
-    --card-soft: #FDFBF4;
-    --card-tint: #F8FBFD;
+    --bg: #FBF6E6;
+    --bg-top: #FDF9EF;
+    --bg-bottom: #F6EFDA;
+    --glow-rgb: 243, 217, 143;
+    --glow-hi-rgb: 255, 253, 245;
+    --card: #FFFDF8;
+    --card-soft: #FDF8EA;
+    --card-tint: #F7FAFD;
     --text: #333B47;
     --text-soft: #4A5462;
-    --sub: #6E7885;
-    --faint: #BDC4CC;
-    --faint-2: #CFD5DC;
-    --placeholder: #A9B0B9;
-    --accent: #4B76A6;
+    --sub: #6B7582;
+    --faint: #C6C4B4;
+    --faint-2: #D7D4C4;
+    --placeholder: #ABA893;
+    --accent: #5A87B8;
     --accent-deep: #37608B;
     --accent-point: #729BC7;
-    --accent-soft: #E2EBF6;
-    --accent-soft-2: #EDF3FA;
-    --accent-line: #C3D6EA;
-    --accent-line-2: #D3E0EE;
-    --accent-line-3: #C9DAEC;
-    --accent-grad-1: #4E79A9;
-    --accent-grad-2: #3E6893;
-    --on-accent: #F8FBFE;
-    --header-grad-1: #F3F7FC;
-    --header-grad-2: #E4EEF9;
-    --header-grad-3: #FBF3DE;
-    --line: #E2E4E8;
-    --line-soft: #EEF0F3;
-    --chip-bg: #F2F4F7;
-    --tint: #F0F3F6;
-    --tint-2: #F3F5F7;
+    --accent-soft: #FAF0CA;
+    --accent-soft-2: #FDF7E6;
+    --accent-line: #EEDCA4;
+    --accent-line-2: #F5E7B8;
+    --accent-line-3: #E7D289;
+    --accent-grad-1: #729BC7;
+    --accent-grad-2: #4B76A6;
+    --on-accent: #FBFDFF;
+    --header-grad-1: #FDF7E4;
+    --header-grad-2: #F9E9B4;
+    --header-grad-3: #E9F1FA;
+    --line: #E6DEC7;
+    --line-soft: #F1EBD8;
+    --chip-bg: #F8F1D9;
+    --tint: #F8F1DD;
+    --tint-2: #FAF5E6;
     --amber: #8A6B33;
-    --amber-soft: #FBF0D2;
+    --amber-soft: #F7E6A8;
     --red: #A1584A;
     --red-soft: #F8EAE4;
     --red-line: #E7D8CE;
-    --shadow-rgb: 75, 118, 166;
+    --shadow-rgb: 90, 135, 184;
     --ink-rgb: 51, 59, 71;
     --toast-bg: #333B47;
-    --toast-text: #FAF8F1;
+    --toast-text: #FBF6E6;
   }
 
   /* 🌸 소프트 리넨 · 체리 블라썸 (리넨 바탕 + 벚꽃 핑크) */
@@ -420,7 +420,7 @@
   }
   .zone-pick {
     position: relative; display: inline-flex; align-items: center;
-    flex: 0 1 auto; width: 92px; min-width: 0;
+    flex: 0 1 auto; width: 66px; min-width: 0;
   }
   .zone-select {
     appearance: none; -webkit-appearance: none;
@@ -1638,7 +1638,7 @@ function renderFridge() {
           const cls = f.status === '많음' ? 'stock-full' : f.status === '절반' ? 'stock-half' : 'stock-low';
           const zoneNow = ZONE_LABELS[f.place] ? ZONE_LABELS[f.place].section : f.place;
           const zoneSel = `<span class="zone-pick"><select class="zone-select" onchange="moveZone(${f.id}, this.value)" aria-label="${f.name} 보관 위치 (현재 ${zoneNow})">${
-            ZONE_KEYS.map(z => `<option value="${z}"${f.place === z ? ' selected' : ''}>${ZONE_LABELS[z].icon} ${ZONE_LABELS[z].section}</option>`).join('')
+            ZONE_KEYS.map(z => `<option value="${z}"${f.place === z ? ' selected' : ''}>${ZONE_LABELS[z].icon} ${ZONE_LABELS[z].short}</option>`).join('')
           }</select><span class="zone-caret" aria-hidden="true">▾</span></span>`;
           return `
             <div class="item-row${zoneFlash === f.id ? ' just-moved' : ''}">
