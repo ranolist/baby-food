@@ -186,7 +186,7 @@
     white-space: nowrap; box-shadow: 0 2px 7px rgba(184, 115, 68, 0.2);
   }
 
-  /* 냉장고 재고 상태 */
+  /* 우리집 재고 상태 */
   .stock-pill {
     border: none; border-radius: 999px; padding: 5px 9px; font-size: 10.5px;
     font-weight: 800; cursor: pointer; white-space: nowrap; font-family: inherit;
@@ -271,6 +271,25 @@
   .ftc-notice {
     font-size: 11px; color: var(--sub); text-align: center; line-height: 1.55;
     padding: 10px 8px; margin-top: 6px;
+  }
+  .ftc-notice.ftc-top {
+    text-align: left; margin: 0 0 10px; padding: 9px 11px;
+    background: var(--amber-soft); color: var(--amber);
+    border-radius: 12px; font-weight: 600; word-break: keep-all;
+  }
+  .pick-live {
+    background: #fff8ef; border: 1.5px solid #ecdcc6; border-radius: 16px;
+    padding: 12px 10px; margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(184, 115, 68, 0.08);
+  }
+  .pick-live-tag {
+    display: inline-block; font-size: 10px; font-weight: 800; padding: 2px 7px;
+    border-radius: 7px; background: var(--accent-soft); color: var(--accent); margin: 0 0 4px 4px;
+  }
+  .btn-buy.btn-buy-live {
+    background: linear-gradient(135deg, #c5824f, #b87344); color: #fff8ef;
+    border-color: #b87344; padding: 7px 10px; font-size: 11px;
+    box-shadow: 0 2px 7px rgba(184, 115, 68, 0.2);
   }
   .toast {
     position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
@@ -373,7 +392,7 @@
       <img class="brand-icon" src="icon-512.png" alt="아기 먹거리 앱 아이콘">
       <div style="min-width:0;">
         <h1>오늘 뭐 먹이지?</h1>
-        <p>장보기부터 냉장고 재고까지 한 번에</p>
+        <p>장보기부터 우리집에 있는 먹거리까지 한 번에</p>
       </div>
     </div>
     <button class="family-badge" id="familyBadge" onclick="openFamilyModal()">👨‍👩‍👧 가족 연결</button>
@@ -387,7 +406,7 @@
 
   <div class="tabs">
     <button class="tab active" onclick="setTab('cart', this)">🛒 장보기</button>
-    <button class="tab" onclick="setTab('fridge', this)">🧊 냉장고</button>
+    <button class="tab" onclick="setTab('fridge', this)">🏠 우리집</button>
     <button class="tab" onclick="setTab('recipe', this)">🍳 레시피</button>
     <button class="tab" onclick="setTab('kr', this)">⭐ 추천템</button>
   </div>
@@ -471,6 +490,9 @@
 
   <!-- Tab 4: Curated Recommendations (Coupang Partners Area) -->
   <div id="tab-kr" style="display:none;">
+    <div class="ftc-notice ftc-top">
+      ※ 쿠팡 파트너스 활동의 일환으로 일정액의 수수료를 제공받습니다. (동일 가격 구매)
+    </div>
     <div class="recipe-filter" style="flex-wrap:wrap;">
       <button class="fbtn active" onclick="setPickFilter('all', this)">전체</button>
       <button class="fbtn" onclick="setPickFilter('kr', this)">🇰🇷 국산 먹거리</button>
@@ -520,7 +542,7 @@
 <div class="modal-bg" id="familyModal">
   <div class="modal">
     <h3>👨‍👩‍👧 가족 연결</h3>
-    <p>같은 가족 코드를 넣으면 배우자 폰과 장보기·냉장고·메모가 실시간으로 같이 바뀌어요.</p>
+    <p>같은 가족 코드를 넣으면 배우자 폰과 장보기·우리집·메모가 실시간으로 같이 바뀌어요.</p>
     <input type="text" id="familyInput" placeholder="가족 코드 (예: bebe-7k4m2p)" maxlength="32" autocomplete="off" oninput="setFamilyWarn('')">
     <button class="btn-random-code" onclick="makeRandomFamilyCode()">🎲 새 가족 코드 만들기</button>
     <p class="family-warn" id="familyWarn" style="display:none;"></p>
@@ -606,6 +628,7 @@ function renderQuicks() {
 }
 
 const PICKS = [
+  { cats: ['kr', 'snack'], badge: '🇰🇷 국산 먹거리', title: '범산목장 유기농 목초 그릭 요거트 (350ml)', desc: '원유 99.99% + 유산균 0.01% 무가당·무첨가물! 25개월 아기도 잘 먹는 유기농 그릭요거트', buyUrl: 'https://link.coupang.com/a/iKN218YGXs', addCat: '간식·유제품', addName: '범산목장 그릭요거트' },
   { cat: 'kr', badge: '원초 100% 국산', title: '무염·저염 아기 김', desc: '기름·소금 덜어내고 국산 원초로 구운 주먹밥 필수템', addCat: '국산·영양', addName: '국산 무염 아기김' },
   { cat: 'kr', badge: '국산 1급A 원유', title: '국산 원유 아기 멸균우유 · 치즈', desc: '외출 가방에 쏙 들어가고 상온 보관 편한 국산 원유', addCat: '간식·유제품', addName: '국산 멸균우유' },
   { cat: 'kr', badge: '국내 제조', title: '국산 멸치 · 한우 사골 육수코인', desc: '아기 국·덮밥 5분 만에 끓여내는 무첨가 국산 육수', addCat: '국산·영양', addName: '국산 아기 육수' },
@@ -621,17 +644,19 @@ function setPickFilter(mode, el) {
 }
 
 function renderPicks() {
-  const list = pickFilter === 'all' ? PICKS : PICKS.filter(p => p.cat === pickFilter);
+  const list = pickFilter === 'all' ? PICKS : PICKS.filter(p => (p.cats || [p.cat]).includes(pickFilter));
   const box = document.getElementById('pickList');
   box.innerHTML = `<div class="card">` + list.map(p => `
-    <div class="pick-card">
+    <div class="pick-card${p.buyUrl ? ' pick-live' : ''}">
       <div>
-        <span class="pick-badge">${p.badge}</span>
+        <span class="pick-badge">${p.badge}</span>${p.buyUrl ? '<span class="pick-live-tag">🛒 구매 링크</span>' : ''}
         <div class="pick-title">${p.title}</div>
         <div class="pick-desc">${p.desc}</div>
       </div>
       <div class="kr-actions">
-        <a class="btn-buy" href="#" onclick="demoLink(event, '${p.title}')">쿠팡 보기</a>
+        ${p.buyUrl
+          ? `<a class="btn-buy btn-buy-live" href="${p.buyUrl}" target="_blank" rel="noopener noreferrer">쿠팡에서 보기</a>`
+          : `<a class="btn-buy" href="#" onclick="demoLink(event, '${p.title}')">쿠팡 보기</a>`}
         <button class="btn-mini-add" onclick="quickAdd('${p.addCat}', '${p.addName}')">+ 장보기</button>
       </div>
     </div>
@@ -756,7 +781,7 @@ function buyItem(id) {
   saveFridge(fridge);
   render();
   renderFridge();
-  showToast(`'${target.name}' 🧊 냉장고 재고로 들어갔어요!`);
+  showToast(`'${target.name}' 🏠 우리집에 넣어뒀어요!`);
 }
 
 function delItem(id) {
@@ -784,10 +809,10 @@ function clearCartAll() {
 
 function clearFridgeAll() {
   if (!loadFridge().length) { showToast('이미 비어 있어요!'); return; }
-  if (!confirm('냉장고 재고 목록을 전부 비울까요?')) return;
+  if (!confirm('우리집 목록을 전부 비울까요?')) return;
   saveFridge([]);
   renderFridge();
-  showToast('냉장고 재고를 싹 비웠어요!');
+  showToast('우리집 목록을 싹 비웠어요!');
 }
 
 function addItem() {
@@ -821,7 +846,7 @@ function addFridge() {
   saveFridge(fridge);
   document.getElementById('fridgeName').value = '';
   renderFridge();
-  showToast('냉장고 재고에 추가했어요!');
+  showToast('우리집에 추가했어요!');
 }
 
 function cycleStock(id) {
@@ -1005,7 +1030,7 @@ function render() {
             <div class="chk" onclick="buyItem(${it.id})"></div>
             <div class="item-info" onclick="buyItem(${it.id})">
               <div class="item-name">${it.name}</div>
-              ${it.note ? `<div class="item-tag">${it.note}</div>` : '<div class="item-tag">체크하면 냉장고 재고로 이동</div>'}
+              ${it.note ? `<div class="item-tag">${it.note}</div>` : '<div class="item-tag">체크하면 우리집으로 이동</div>'}
             </div>
             <div class="qty-ctrl">
               <button class="qty-btn" onclick="changeQty(${it.id}, -1)" ${(it.qty || 1) <= 1 ? 'disabled' : ''} aria-label="${it.name} 수량 줄이기">−</button>
@@ -1018,7 +1043,7 @@ function render() {
         `).join('')}
       </div>
     `;
-  }).join('') || '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">장볼 게 다 끝났어요! 산 건 🧊 냉장고 탭에 들어가 있어요.</div>';
+  }).join('') || '<div class="card" style="text-align:center;color:var(--sub);font-size:13px;">장볼 게 다 끝났어요! 산 건 🏠 우리집 탭에 들어가 있어요.</div>';
 }
 
 function setFridgeFilter(mode, el) {
