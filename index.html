@@ -352,6 +352,18 @@
     cursor: pointer; font-family: inherit;
   }
   .family-hint { margin: 10px 0 0 !important; font-size: 11px !important; }
+  .btn-random-code {
+    width: 100%; background: #fdf6ec; color: var(--accent); border: 1.5px dashed #ddc9ad;
+    border-radius: 14px; padding: 11px; font-size: 13px; font-weight: 800;
+    cursor: pointer; font-family: inherit; margin: -2px 0 10px;
+    transition: background .15s ease, transform .1s ease;
+  }
+  .btn-random-code:active { background: var(--accent-soft); transform: scale(0.985); }
+  .family-warn {
+    margin: 0 0 10px !important; font-size: 11.5px !important; line-height: 1.5 !important;
+    color: var(--amber) !important; background: var(--amber-soft);
+    border-radius: 12px; padding: 8px 10px; font-weight: 600; word-break: keep-all;
+  }
 </style>
 </head>
 <body>
@@ -509,7 +521,9 @@
   <div class="modal">
     <h3>👨‍👩‍👧 가족 연결</h3>
     <p>같은 가족 코드를 넣으면 배우자 폰과 장보기·냉장고·메모가 실시간으로 같이 바뀌어요.</p>
-    <input type="text" id="familyInput" placeholder="가족 코드 (예: 우리집123)" maxlength="32" autocomplete="off">
+    <input type="text" id="familyInput" placeholder="가족 코드 (예: bebe-7k4m2p)" maxlength="32" autocomplete="off" oninput="setFamilyWarn('')">
+    <button class="btn-random-code" onclick="makeRandomFamilyCode()">🎲 새 가족 코드 만들기</button>
+    <p class="family-warn" id="familyWarn" style="display:none;"></p>
     <div class="modal-btns">
       <button class="btn-m close" onclick="closeFamilyModal()">닫기</button>
       <button class="btn-m go" onclick="saveFamilyCode()">연결하기</button>
@@ -1168,6 +1182,59 @@ function sig(str) {
 function normalizeCode(raw) {
   return String(raw || '').trim().replace(/\s+/g, '').toLowerCase().slice(0, 64);
 }
+
+/* ── 🎲 겹치지 않는 랜덤 가족 코드 ── */
+const FAMILY_CODE_PREFIX = 'bebe-';
+const FAMILY_CODE_CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789'; // 영숫자 36자
+// 흔해서 다른 집과 겹치기 쉬운 코드
+const WEAK_FAMILY_CODES = [
+  '1234', '12345', '123456', '1234567', '12345678', '12341234', '123123', '1212',
+  '1111', '11111', '111111', '11111111', '0000', '00000', '000000', '00000000',
+  '2222', '222222', '9999', '999999', 'abcd', 'abc123', 'aaa111',
+  '우리집', '우리집123', '우리집1234', '우리집코드', '가족', '가족코드', '엄마', '아빠', '아기', '집',
+  'family', 'family1', 'family123', 'ourhome', 'home', 'home123', 'house', 'love', 'love123',
+  'test', 'test1', 'test123', 'test1234', 'testtest', 'baby', 'baby123', 'babyfood', 'babylove', 'bebe'
+];
+function randomFamilyCode() {
+  const pool = FAMILY_CODE_CHARS;
+  const size = 6;
+  const limit = Math.floor(256 / pool.length) * pool.length; // 편향 없이 뽑기 위한 경계(252)
+  let out = '';
+  while (out.length < size) {
+    const bytes = new Uint8Array(size);
+    if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+      window.crypto.getRandomValues(bytes);
+    } else {
+      for (let i = 0; i < bytes.length; i++) bytes[i] = Math.floor(Math.random() * 256);
+    }
+    for (let i = 0; i < bytes.length && out.length < size; i++) {
+      if (bytes[i] < limit) out += pool.charAt(bytes[i] % pool.length);
+    }
+  }
+  return FAMILY_CODE_PREFIX + out;
+}
+function setFamilyWarn(msg) {
+  const el = document.getElementById('familyWarn');
+  if (!el) return;
+  if (msg) { el.textContent = msg; el.style.display = 'block'; }
+  else { el.textContent = ''; el.style.display = 'none'; }
+}
+// 너무 짧거나 흔한 코드면 안내 문구를 돌려준다
+function familyCodeWarning(code) {
+  if (!code) return '';
+  if (code.length < 6) return '코드가 너무 짧아요(' + code.length + '자). 6자 이상을 권해요.';
+  if (WEAK_FAMILY_CODES.indexOf(code) !== -1) return '"' + code + '"는 흔해서 다른 집과 겹치기 쉬워요.';
+  return '';
+}
+function makeRandomFamilyCode() {
+  const input = document.getElementById('familyInput');
+  if (!input) return;
+  const code = randomFamilyCode();
+  input.value = code;
+  setFamilyWarn('');
+  input.focus();
+  showToast('🎲 ' + code + ' — [연결하기]를 누르면 저장돼요');
+}
 function isMissingTable(err) {
   if (!err) return false;
   const code = err.code || '';
@@ -1391,6 +1458,14 @@ async function saveFamilyCode() {
   if (!code) { showToast('가족 코드를 적어주세요!'); input.focus(); return; }
   if (code.length < 3) { showToast('3자 이상으로 정해주세요!'); input.focus(); return; }
   if (code === familyCode && syncState === 'live') { showToast('이미 실시간 연결돼 있어요!'); closeFamilyModal(); return; }
+  const warn = familyCodeWarning(code);
+  if (warn) {
+    setFamilyWarn('⚠️ ' + warn + ' 🎲 랜덤 코드를 쓰면 겹칠 일이 거의 없어요.');
+    const go = confirm('⚠️ ' + warn + '\n\n다른 집 코드와 겹치면 남의 장보기 목록이 내 화면에 보일 수 있어요.\n\n🎲 "새 가족 코드 만들기"로 겹치지 않는 코드를 만드는 걸 권해요.\n\n그래도 "' + code + '"(으)로 연결할까요?');
+    if (!go) { input.focus(); return; }
+  } else {
+    setFamilyWarn('');
+  }
   familyCode = code;
   try { localStorage.setItem(FAMILY_KEY, code); } catch (e) {}
   lastPushedSig = '';
