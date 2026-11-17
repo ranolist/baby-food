@@ -351,7 +351,7 @@
   .item-info { flex: 1; min-width: 0; cursor: pointer; }
   .item-name { font-size: 13.5px; font-weight: 700; line-height: 1.3; }
   .item-tag { font-size: 11px; color: var(--sub); margin-top: 2px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .fridge-tools { display: flex; align-items: center; gap: 5px; margin-top: 6px; flex-wrap: wrap; }
+  .fridge-tools { display: flex; align-items: center; gap: 4px; margin-top: 6px; flex-wrap: nowrap; }
   .btn-buy {
     text-decoration: none; background: var(--accent-soft); color: var(--sage-deep);
     border: 1.5px solid var(--sage-line); border-radius: 10px; padding: 5px 8px;
@@ -418,21 +418,25 @@
     font-size: 11px; color: var(--sub); line-height: 1.45; word-break: keep-all;
     margin: 0 3px 9px;
   }
-  .zone-move {
-    display: inline-flex; align-items: center; gap: 1px; flex-shrink: 0;
-    background: var(--chip-bg); border: 1.5px solid var(--line); border-radius: 999px; padding: 2px;
+  .zone-pick {
+    position: relative; display: inline-flex; align-items: center;
+    flex: 0 1 auto; width: 92px; min-width: 0;
   }
-  .zone-btn {
-    border: none; background: none; border-radius: 999px; padding: 4px 7px;
-    font-size: 10.5px; font-weight: 800; color: var(--sub); cursor: pointer;
-    font-family: inherit; line-height: 1.25; white-space: nowrap;
-    display: inline-flex; align-items: center; gap: 1px;
-    transition: background .12s ease, color .12s ease;
+  .zone-select {
+    appearance: none; -webkit-appearance: none;
+    width: 100%; min-width: 0;
+    border: 1.5px solid var(--sage-line); border-radius: 999px;
+    background: var(--chip-bg); color: var(--sage-deep);
+    padding: 4px 14px 4px 7px;
+    font-family: inherit; font-size: 10.5px; font-weight: 800; line-height: 1.25;
+    text-overflow: ellipsis; white-space: nowrap; cursor: pointer;
+    transition: background .12s ease;
   }
-  .zone-btn:active { background: var(--accent-soft-2); }
-  .zone-btn.on {
-    background: linear-gradient(135deg, var(--accent-grad-1), var(--accent)); color: var(--on-accent);
-    box-shadow: 0 1px 4px rgba(var(--shadow-rgb), 0.26);
+  .zone-select:active { background: var(--accent-soft-2); }
+  .zone-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .zone-caret {
+    position: absolute; right: 5px; top: 50%; transform: translateY(-50%);
+    font-size: 7px; line-height: 1; color: var(--sub); pointer-events: none;
   }
   @keyframes zonePop {
     0% { background: var(--accent-soft); }
@@ -797,7 +801,7 @@
       <input type="text" id="fridgeName" placeholder="지금 있는 식재료 추가">
       <button class="btn-add" onclick="addFridge()">추가</button>
     </div>
-    <div class="fridge-hint">칩을 누르면 보관 위치(냉장·냉동·실온)와 상태가 바로 바뀌어요.</div>
+    <div class="fridge-hint">상태 칩이나 보관 칸(❄️ 냉장 ▾)을 누르면 바로 바뀌어요.</div>
     <div id="fridgeList"></div>
   </div>
 
@@ -1631,11 +1635,10 @@ function renderFridge() {
         <div class="cat-title"><span>${p === '냉장' ? '❄️ 냉장실' : p === '냉동' ? '🧊 냉동실' : '🧺 실온·팬트리'}</span><span>${list.length}개</span></div>
         ${list.map(f => {
           const cls = f.status === '많음' ? 'stock-full' : f.status === '절반' ? 'stock-half' : 'stock-low';
-          const zoneChips = ZONE_KEYS.map(z => {
-            const on = f.place === z;
-            const zi = ZONE_LABELS[z];
-            return `<button class="zone-btn${on ? ' on' : ''}" onclick="moveZone(${f.id}, '${z}')" aria-pressed="${on}" aria-label="${f.name} ${zi.section}${on ? ' 현재 위치' : '로 옮기기'}"><span aria-hidden="true">${zi.icon}</span>${zi.short}</button>`;
-          }).join('');
+          const zoneNow = ZONE_LABELS[f.place] ? ZONE_LABELS[f.place].section : f.place;
+          const zoneSel = `<span class="zone-pick"><select class="zone-select" onchange="moveZone(${f.id}, this.value)" aria-label="${f.name} 보관 위치 (현재 ${zoneNow})">${
+            ZONE_KEYS.map(z => `<option value="${z}"${f.place === z ? ' selected' : ''}>${ZONE_LABELS[z].icon} ${ZONE_LABELS[z].section}</option>`).join('')
+          }</select><span class="zone-caret" aria-hidden="true">▾</span></span>`;
           return `
             <div class="item-row${zoneFlash === f.id ? ' just-moved' : ''}">
               <button class="btn-fav" style="font-size:17px;" onclick="toggleFridgeFav(${f.id})" aria-label="상비템 즐겨찾기">${f.fav ? '⭐' : '☆'}</button>
@@ -1643,7 +1646,7 @@ function renderFridge() {
                 <div class="item-name">${f.name}</div>
                 <div class="fridge-tools">
                   <button class="stock-pill ${cls}" onclick="cycleStock(${f.id})" aria-label="${f.name} 상태 변경 (현재 ${f.status})">${f.status}</button>
-                  <div class="zone-move" role="group" aria-label="${f.name} 보관 위치 이동">${zoneChips}</div>
+                  ${zoneSel}
                   <button class="btn-readd" onclick="sendToCart(${f.id})">다 먹음→장보기</button>
                 </div>
               </div>
