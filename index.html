@@ -511,17 +511,40 @@
     margin-bottom: 12px; line-height: 1.45;
   }
   .pick-card {
-    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    display: grid; grid-template-columns: 66px minmax(0, 1fr); align-items: center;
+    gap: 5px 10px;
     padding: 12px 0; border-bottom: 1px dashed var(--line-soft);
   }
   .pick-card:last-child { border-bottom: none; padding-bottom: 2px; }
+  /* 실물 제품 누끼 썸네일 타일 */
+  .pick-thumb {
+    grid-row: 1 / span 2; align-self: center;
+    width: 66px; height: 66px; border-radius: 19px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; overflow: hidden;
+    background:
+      radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 68%),
+      linear-gradient(160deg, var(--tint-2) 0%, var(--tint) 100%);
+    border: 1.5px solid var(--line-soft);
+  }
+  .pick-thumb img {
+    width: 100%; height: 100%; object-fit: contain; display: block;
+    filter: drop-shadow(0 1.5px 2.5px rgba(var(--shadow-rgb), 0.26));
+  }
+  .pick-thumb.emoji { font-size: 27px; line-height: 1; }
+  .pick-body { min-width: 0; }
   .pick-badge {
     display: inline-block; font-size: 10px; font-weight: 800; padding: 2px 7px;
     border-radius: 7px; background: var(--green-soft); color: var(--green); margin-bottom: 4px;
   }
-  .pick-title { font-size: 14px; font-weight: 800; margin-bottom: 2px; }
-  .pick-desc { font-size: 12px; color: var(--sub); line-height: 1.45; }
-  .kr-actions { display: flex; flex-direction: column; gap: 5px; align-items: flex-end; }
+  .pick-title { font-size: 13.5px; font-weight: 800; margin-bottom: 2px; line-height: 1.35; word-break: keep-all; }
+  .pick-desc { font-size: 11.5px; color: var(--sub); line-height: 1.45; word-break: keep-all; }
+  .kr-actions { display: flex; flex-direction: row; flex-wrap: wrap; gap: 5px; align-items: center; justify-content: flex-end; }
+  @media (max-width: 360px) {
+    .pick-card { grid-template-columns: 50px minmax(0, 1fr); gap: 5px 8px; }
+    .pick-thumb { width: 50px; height: 50px; border-radius: 15px; }
+    .pick-title { font-size: 13px; }
+    .pick-desc { font-size: 11px; }
+  }
   .btn-mini-add {
     background: var(--tint-2); color: var(--sage-deep); border: 1.5px solid var(--accent-line); border-radius: 9px;
     padding: 5px 8px; font-size: 10.5px; font-weight: 700; cursor: pointer; white-space: nowrap;
@@ -1036,13 +1059,13 @@ function renderQuicks() {
 }
 
 const PICKS = [
-  { cats: ['kr', 'snack'], badge: '🇰🇷 국산 먹거리', title: '범산목장 유기농 목초 그릭 요거트 (350ml)', desc: '원유 99.99% + 유산균 0.01% 무가당·무첨가물! 25개월 아기도 잘 먹는 유기농 그릭요거트', buyUrl: 'https://link.coupang.com/a/iKN218YGXs', addCat: '간식·유제품', addName: '범산목장 그릭요거트' },
-  { cats: ['kr'], badge: '🇰🇷 국산 A2 원유', title: '연세 세브란스 전용목장 A2 단백우유 (180ml)', desc: '유아 우유 · 국내산 A2 원유 100% · 실온 멸균팩 · 단백질 6g', buyUrl: 'https://link.coupang.com/a/iLtCFWfMK4', addCat: '간식·유제품', addName: '세브란스 A2 단백우유' },
-  { cat: 'kr', badge: '원초 100% 국산', title: '무염·저염 아기 김', desc: '기름·소금 덜어내고 국산 원초로 구운 주먹밥 필수템', addCat: '국산·영양', addName: '국산 무염 아기김' },
-  { cat: 'kr', badge: '국산 1급A 원유', title: '국산 원유 아기 멸균우유 · 치즈', desc: '외출 가방에 쏙 들어가고 상온 보관 편한 국산 원유', addCat: '간식·유제품', addName: '국산 멸균우유' },
-  { cat: 'kr', badge: '국내 제조', title: '국산 멸치 · 한우 사골 육수코인', desc: '아기 국·덮밥 5분 만에 끓여내는 무첨가 국산 육수', addCat: '국산·영양', addName: '국산 아기 육수' },
-  { cat: 'snack', badge: '무첨가 간식', title: '국산 유기농 쌀과자 · 동결건조 과일', desc: '외출 가방에 하나씩 챙기기 딱 좋은 입심심 방지템', addCat: '간식·유제품', addName: '유기농 쌀과자' },
-  { cat: 'gear', badge: '24개월+ 추천', title: '아기 첫 교정 젓가락 · 흡착식판', desc: '설거지 편하고 아이 손에 착 감기는 실사용템', addCat: '국산·영양', addName: '아기 교정 젓가락' }
+  { cats: ['kr', 'snack'], badge: '🇰🇷 국산 먹거리', img: 'assets/thumbs/beomsan.png', imgAlt: '범산목장 유기농 목초 그릭 요거트 350ml 실물 사진', title: '범산목장 유기농 목초 그릭 요거트 (350ml)', desc: '원유 99.99% + 유산균 0.01% 무가당·무첨가물! 25개월 아기도 잘 먹는 유기농 그릭요거트', buyUrl: 'https://link.coupang.com/a/iKN218YGXs', addCat: '간식·유제품', addName: '범산목장 그릭요거트' },
+  { cats: ['kr'], badge: '🇰🇷 국산 A2 원유', img: 'assets/thumbs/severance_a2.png', imgAlt: '연세 세브란스 전용목장 A2 단백우유 180ml 실물 사진', title: '연세 세브란스 전용목장 A2 단백우유 (180ml)', desc: '유아 우유 · 국내산 A2 원유 100% · 실온 멸균팩 · 단백질 6g', buyUrl: 'https://link.coupang.com/a/iLtCFWfMK4', addCat: '간식·유제품', addName: '세브란스 A2 단백우유' },
+  { cat: 'kr', badge: '원초 100% 국산', emoji: '🍙', title: '무염·저염 아기 김', desc: '기름·소금 덜어내고 국산 원초로 구운 주먹밥 필수템', addCat: '국산·영양', addName: '국산 무염 아기김' },
+  { cat: 'kr', badge: '국산 1급A 원유', emoji: '🧀', title: '국산 원유 아기 멸균우유 · 치즈', desc: '외출 가방에 쏙 들어가고 상온 보관 편한 국산 원유', addCat: '간식·유제품', addName: '국산 멸균우유' },
+  { cat: 'kr', badge: '국내 제조', emoji: '🍲', title: '국산 멸치 · 한우 사골 육수코인', desc: '아기 국·덮밥 5분 만에 끓여내는 무첨가 국산 육수', addCat: '국산·영양', addName: '국산 아기 육수' },
+  { cat: 'snack', badge: '무첨가 간식', emoji: '🍘', title: '국산 유기농 쌀과자 · 동결건조 과일', desc: '외출 가방에 하나씩 챙기기 딱 좋은 입심심 방지템', addCat: '간식·유제품', addName: '유기농 쌀과자' },
+  { cat: 'gear', badge: '24개월+ 추천', emoji: '🥢', title: '아기 첫 교정 젓가락 · 흡착식판', desc: '설거지 편하고 아이 손에 착 감기는 실사용템', addCat: '국산·영양', addName: '아기 교정 젓가락' }
 ];
 
 function setPickFilter(mode, el) {
@@ -1057,7 +1080,10 @@ function renderPicks() {
   const box = document.getElementById('pickList');
   box.innerHTML = `<div class="card">` + list.map(p => `
     <div class="pick-card${p.buyUrl ? ' pick-live' : ''}">
-      <div>
+      ${p.img
+        ? `<div class="pick-thumb"><img src="${p.img}" alt="${p.imgAlt || p.title}" loading="lazy" decoding="async"></div>`
+        : `<div class="pick-thumb emoji" aria-hidden="true">${p.emoji || '🛒'}</div>`}
+      <div class="pick-body">
         <span class="pick-badge">${p.badge}</span>${p.buyUrl ? '<span class="pick-live-tag">🛒 구매 링크</span>' : ''}
         <div class="pick-title">${p.title}</div>
         <div class="pick-desc">${p.desc}</div>
