@@ -4,8 +4,8 @@
   "description": "우리집 아기 먹거리·장보기 — 장보기 체크부터 냉장고 재고, 유아식 레시피까지 한 화면에",
   "start_url": "/baby-food/",
   "display": "standalone",
-  "theme_color": "#F7F5F0",
-  "background_color": "#F7F5F0",
+  "theme_color": "#F7F3EC",
+  "background_color": "#F7F3EC",
   "icons": [
     {
       "src": "icon-192.png",

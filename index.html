@@ -22,57 +22,57 @@
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="icon" href="favicon.ico" sizes="any">
-<meta name="theme-color" content="#F7F5F0">
+<meta name="theme-color" content="#F7F3EC">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="집밥수첩">
 <style>
   :root {
-    /* ── 🎨 기본 팔레트: 🌿 세이지 · 오트밀 ── */
-    --bg: #F7F5F0;
-    --bg-top: #F9F7F2;
-    --bg-bottom: #F4F2EB;
-    --glow-rgb: 233, 239, 233;
-    --glow-hi-rgb: 255, 255, 255;
-    --card: #FFFFFF;
-    --card-soft: #FCFAF6;
-    --card-tint: #F8FAF6;
-    --text: #3A3D39;
-    --text-soft: #4E5A4C;
-    --sub: #7A8178;
-    --faint: #B9C0B4;
-    --faint-2: #CFD3C9;
-    --placeholder: #A8AFA5;
-    --accent: #5F7A61;
-    --accent-deep: #4A604C;
-    --accent-point: #5F7A61;
-    --accent-soft: #E9EFE9;
-    --accent-soft-2: #EEF3EA;
-    --accent-line: #D6E0D5;
-    --accent-line-2: #DCE4DB;
-    --accent-line-3: #CFDACC;
-    --accent-grad-1: #6E8A70;
-    --accent-grad-2: #5F7A61;
-    --on-accent: #F7FAF6;
-    --header-grad-1: #F4F6F0;
-    --header-grad-2: #E9EFE9;
-    --header-grad-3: #F1EFE6;
-    --line: #E3E1D7;
-    --line-soft: #EFEDE4;
-    --chip-bg: #F4F2EC;
-    --tint: #F1F2EA;
-    --tint-2: #EFF2EA;
-    --amber: #92794A;
-    --amber-soft: #F4EFE2;
-    --red: #A85D4E;
-    --red-soft: #F7EAE5;
-    --red-line: #E6D5CD;
-    --shadow-rgb: 95, 122, 97;
-    --ink-rgb: 58, 61, 57;
-    --toast-bg: #3A3D39;
-    --toast-text: #F7F5F0;
+    /* ── 🎨 기본 팔레트 1: 🏺 아이보리 · 테라코타 ── */
+    --bg: #F7F3EC;
+    --bg-top: #FAF7F1;
+    --bg-bottom: #F1ECE2;
+    --glow-rgb: 235, 219, 201;
+    --glow-hi-rgb: 255, 252, 246;
+    --card: #FCF9F4;
+    --card-soft: #F8F2E9;
+    --card-tint: #F9F4ED;
+    --text: #2F2925;
+    --text-soft: #463B33;
+    --sub: #756A5E;
+    --faint: #C6B9AA;
+    --faint-2: #D6CABB;
+    --placeholder: #A99A8B;
+    --accent: #A75734;
+    --accent-deep: #8C4527;
+    --accent-point: #B26A45;
+    --accent-soft: #F0E2D6;
+    --accent-soft-2: #F5EBE1;
+    --accent-line: #E4CBB8;
+    --accent-line-2: #EDD8C7;
+    --accent-line-3: #DCBEA8;
+    --accent-grad-1: #A85B37;
+    --accent-grad-2: #9C4F2F;
+    --on-accent: #FDF8F3;
+    --header-grad-1: #FAF3EA;
+    --header-grad-2: #EFDFD0;
+    --header-grad-3: #F6EEE3;
+    --line: #E6DCCD;
+    --line-soft: #F0E9DD;
+    --chip-bg: #F2EBDF;
+    --tint: #EEE8DC;
+    --tint-2: #F3EEE5;
+    --amber: #8A6A2F;
+    --amber-soft: #F5EDD8;
+    --red: #AB3327;
+    --red-soft: #F9E3DC;
+    --red-line: #EAC8BC;
+    --shadow-rgb: 167, 87, 52;
+    --ink-rgb: 47, 41, 37;
+    --toast-bg: #2F2925;
+    --toast-text: #F7F3EC;
     /* 예전 이름 그대로 쓰는 곳이 있어도 테마를 따라가게 연결 */
-    --green: var(--accent);
+    --green: var(--accent-deep);
     --green-soft: var(--accent-soft);
     --sage: var(--accent);
     --sage-deep: var(--accent-deep);
@@ -80,190 +80,190 @@
     --sage-soft: var(--accent-soft);
   }
 
-  /* 🌿 세이지 · 오트밀 */
-  :root[data-theme="sage"] {
-    --bg: #F7F5F0;
-    --bg-top: #F9F7F2;
-    --bg-bottom: #F4F2EB;
-    --glow-rgb: 233, 239, 233;
-    --glow-hi-rgb: 255, 255, 255;
-    --card: #FFFFFF;
-    --card-soft: #FCFAF6;
-    --card-tint: #F8FAF6;
-    --text: #3A3D39;
-    --text-soft: #4E5A4C;
-    --sub: #7A8178;
-    --faint: #B9C0B4;
-    --faint-2: #CFD3C9;
-    --placeholder: #A8AFA5;
-    --accent: #5F7A61;
-    --accent-deep: #4A604C;
-    --accent-point: #5F7A61;
-    --accent-soft: #E9EFE9;
-    --accent-soft-2: #EEF3EA;
-    --accent-line: #D6E0D5;
-    --accent-line-2: #DCE4DB;
-    --accent-line-3: #CFDACC;
-    --accent-grad-1: #6E8A70;
-    --accent-grad-2: #5F7A61;
-    --on-accent: #F7FAF6;
-    --header-grad-1: #F4F6F0;
-    --header-grad-2: #E9EFE9;
-    --header-grad-3: #F1EFE6;
-    --line: #E3E1D7;
-    --line-soft: #EFEDE4;
-    --chip-bg: #F4F2EC;
-    --tint: #F1F2EA;
-    --tint-2: #EFF2EA;
-    --amber: #92794A;
-    --amber-soft: #F4EFE2;
-    --red: #A85D4E;
-    --red-soft: #F7EAE5;
-    --red-line: #E6D5CD;
-    --shadow-rgb: 95, 122, 97;
-    --ink-rgb: 58, 61, 57;
-    --toast-bg: #3A3D39;
-    --toast-text: #F7F5F0;
+  /* 🏺 아이보리 · 테라코타 (기본) */
+  :root[data-theme="terracotta"] {
+    --bg: #F7F3EC;
+    --bg-top: #FAF7F1;
+    --bg-bottom: #F1ECE2;
+    --glow-rgb: 235, 219, 201;
+    --glow-hi-rgb: 255, 252, 246;
+    --card: #FCF9F4;
+    --card-soft: #F8F2E9;
+    --card-tint: #F9F4ED;
+    --text: #2F2925;
+    --text-soft: #463B33;
+    --sub: #756A5E;
+    --faint: #C6B9AA;
+    --faint-2: #D6CABB;
+    --placeholder: #A99A8B;
+    --accent: #A75734;
+    --accent-deep: #8C4527;
+    --accent-point: #B26A45;
+    --accent-soft: #F0E2D6;
+    --accent-soft-2: #F5EBE1;
+    --accent-line: #E4CBB8;
+    --accent-line-2: #EDD8C7;
+    --accent-line-3: #DCBEA8;
+    --accent-grad-1: #A85B37;
+    --accent-grad-2: #9C4F2F;
+    --on-accent: #FDF8F3;
+    --header-grad-1: #FAF3EA;
+    --header-grad-2: #EFDFD0;
+    --header-grad-3: #F6EEE3;
+    --line: #E6DCCD;
+    --line-soft: #F0E9DD;
+    --chip-bg: #F2EBDF;
+    --tint: #EEE8DC;
+    --tint-2: #F3EEE5;
+    --amber: #8A6A2F;
+    --amber-soft: #F5EDD8;
+    --red: #AB3327;
+    --red-soft: #F9E3DC;
+    --red-line: #EAC8BC;
+    --shadow-rgb: 167, 87, 52;
+    --ink-rgb: 47, 41, 37;
+    --toast-bg: #2F2925;
+    --toast-text: #F7F3EC;
   }
 
-  /* 🌲 헌터 그린 · 샌드 듄 (깊은 초록 + 따뜻한 샌드) */
-  :root[data-theme="hunter"] {
-    --bg: #F9F5E9;
-    --bg-top: #FBF8EF;
-    --bg-bottom: #F2ECDB;
-    --glow-rgb: 221, 214, 185;
-    --glow-hi-rgb: 255, 253, 246;
-    --card: #FFFDF7;
-    --card-soft: #FBF7EC;
-    --card-tint: #F7F8EE;
-    --text: #333A2E;
-    --text-soft: #4A5442;
-    --sub: #6E7663;
-    --faint: #C2BEA8;
-    --faint-2: #D2CEB9;
-    --placeholder: #ADA892;
-    --accent: #3E5F44;
-    --accent-deep: #2E4834;
-    --accent-point: #3E5F44;
-    --accent-soft: #E7EAD6;
-    --accent-soft-2: #EFF1E3;
-    --accent-line: #D6CFAE;
-    --accent-line-2: #E2DCC2;
-    --accent-line-3: #CFC9A6;
-    --accent-grad-1: #4F7355;
-    --accent-grad-2: #3E5F44;
-    --on-accent: #FBFCF6;
-    --header-grad-1: #F6F1DE;
-    --header-grad-2: #EDE7CF;
-    --header-grad-3: #F3ECDA;
-    --line: #E3DCC6;
-    --line-soft: #EFEBDD;
-    --chip-bg: #F1ECDA;
-    --tint: #F1EDDF;
-    --tint-2: #F3EFE2;
-    --amber: #8A6A33;
-    --amber-soft: #F4EAD0;
-    --red: #9E5347;
-    --red-soft: #F6E8E0;
-    --red-line: #E7D5C4;
-    --shadow-rgb: 62, 95, 68;
-    --ink-rgb: 51, 58, 46;
-    --toast-bg: #333A2E;
-    --toast-text: #F9F5E9;
-  }
-
-  /* 🩵 블루 그레이 · 모닝 버터 (맑은 블루 + 버터 옐로) */
-  :root[data-theme="butter"] {
-    --bg: #FBF6E6;
-    --bg-top: #FDF9EF;
-    --bg-bottom: #F4ECD2;
-    --glow-rgb: 243, 217, 143;
-    --glow-hi-rgb: 255, 253, 245;
-    --card: #FFFDF8;
-    --card-soft: #FDF8E7;
-    --card-tint: #F7FAFD;
-    --text: #333B47;
-    --text-soft: #4A5462;
-    --sub: #6B7582;
-    --faint: #C6C4B4;
-    --faint-2: #D7D4C4;
-    --placeholder: #ABA893;
-    --accent: #5A87B8;
-    --accent-deep: #37608B;
-    --accent-point: #729BC7;
-    --accent-soft: #F7E6A8;
-    --accent-soft-2: #FBF2D0;
-    --accent-line: #EBD88F;
-    --accent-line-2: #F3E5B4;
-    --accent-line-3: #E3CB79;
-    --accent-grad-1: #729BC7;
-    --accent-grad-2: #4B76A6;
-    --on-accent: #FBFDFF;
-    --header-grad-1: #FEF8E7;
-    --header-grad-2: #F5DE9C;
-    --header-grad-3: #E9F1FA;
-    --line: #E6DEC7;
-    --line-soft: #F1EBD8;
-    --chip-bg: #FBF3DC;
-    --tint: #F8F1DD;
-    --tint-2: #FAF5E6;
+  /* 🩵 두부 화이트 · 실버 블루 */
+  :root[data-theme="silverblue"] {
+    --bg: #F2F1EB;
+    --bg-top: #F7F6F1;
+    --bg-bottom: #EAE8DF;
+    --glow-rgb: 213, 219, 226;
+    --glow-hi-rgb: 252, 253, 254;
+    --card: #FAFAF7;
+    --card-soft: #F4F4EE;
+    --card-tint: #F6F7F4;
+    --text: #262B31;
+    --text-soft: #3B434C;
+    --sub: #63696F;
+    --faint: #B8BBB7;
+    --faint-2: #C8CBC6;
+    --placeholder: #99A0A2;
+    --accent: #647486;
+    --accent-deep: #4A5867;
+    --accent-point: #85919F;
+    --accent-soft: #E6EAEE;
+    --accent-soft-2: #EEF1F3;
+    --accent-line: #D1D7DE;
+    --accent-line-2: #DEE3E7;
+    --accent-line-3: #C2CAD3;
+    --accent-grad-1: #5F6E7E;
+    --accent-grad-2: #4E5C6B;
+    --on-accent: #FAFCFD;
+    --header-grad-1: #F5F5F0;
+    --header-grad-2: #E3E6E8;
+    --header-grad-3: #F2F1EB;
+    --line: #DEDBD0;
+    --line-soft: #EBE9E0;
+    --chip-bg: #EDEAE1;
+    --tint: #E2E0D4;
+    --tint-2: #EBE9DF;
     --amber: #8A6B33;
-    --amber-soft: #FCEFD0;
-    --green: #3E6B98;
-    --green-soft: #DCE9F6;
-    --red: #A1584A;
-    --red-soft: #F8EAE4;
-    --red-line: #E7D8CE;
-    --shadow-rgb: 90, 135, 184;
-    --ink-rgb: 51, 59, 71;
-    --toast-bg: #333B47;
-    --toast-text: #FBF6E6;
+    --amber-soft: #F4EEDA;
+    --red: #9E5747;
+    --red-soft: #F6E9E3;
+    --red-line: #E6D5CC;
+    --shadow-rgb: 100, 116, 134;
+    --ink-rgb: 38, 43, 49;
+    --toast-bg: #262B31;
+    --toast-text: #F2F1EB;
   }
 
-  /* 🌸 소프트 리넨 · 체리 블라썸 (리넨 바탕 + 벚꽃 핑크) */
-  :root[data-theme="blossom"] {
-    --bg: #F5F1E6;
-    --bg-top: #FAF6EC;
-    --bg-bottom: #F0EADC;
-    --glow-rgb: 250, 221, 228;
-    --glow-hi-rgb: 255, 253, 250;
-    --card: #FFFCFA;
-    --card-soft: #FBF5F2;
-    --card-tint: #FDF8F3;
-    --text: #3B3336;
-    --text-soft: #55424A;
-    --sub: #7B6C71;
-    --faint: #C9BCB6;
-    --faint-2: #D8CCC6;
-    --placeholder: #B0A29C;
-    --accent: #B84F6B;
-    --accent-deep: #A84158;
-    --accent-point: #D9738A;
-    --accent-soft: #FCE9EE;
-    --accent-soft-2: #FDF2F5;
-    --accent-line: #F3CAD5;
-    --accent-line-2: #F6D9E1;
-    --accent-line-3: #F1C2CF;
-    --accent-grad-1: #BC5470;
-    --accent-grad-2: #A94560;
-    --on-accent: #FFF9FA;
-    --header-grad-1: #FCF4F1;
-    --header-grad-2: #F9E3E9;
-    --header-grad-3: #FBF6EB;
-    --line: #E8DFD2;
-    --line-soft: #F2EBE1;
-    --chip-bg: #F4EDE3;
-    --tint: #F3EDE4;
-    --tint-2: #F6F0E7;
-    --amber: #8B6A38;
-    --amber-soft: #F7EEDA;
-    --red: #A34F42;
-    --red-soft: #F8E9E3;
-    --red-line: #E8D7CD;
-    --shadow-rgb: 184, 79, 107;
-    --ink-rgb: 59, 51, 54;
-    --toast-bg: #3B3336;
-    --toast-text: #FBF7EF;
+  /* 🌿 웜 그레이 · 세이지 그린 */
+  :root[data-theme="sage"] {
+    --bg: #F3F3EF;
+    --bg-top: #F8F8F5;
+    --bg-bottom: #EBECE6;
+    --glow-rgb: 222, 227, 217;
+    --glow-hi-rgb: 253, 254, 252;
+    --card: #FAFBF8;
+    --card-soft: #F4F5F0;
+    --card-tint: #F6F7F2;
+    --text: #292C26;
+    --text-soft: #3E443A;
+    --sub: #6B6D62;
+    --faint: #BABCB2;
+    --faint-2: #CACCC3;
+    --placeholder: #9C9E94;
+    --accent: #667058;
+    --accent-deep: #4E5843;
+    --accent-point: #7E8870;
+    --accent-soft: #E9EBE3;
+    --accent-soft-2: #F0F1EA;
+    --accent-line: #D7DBCE;
+    --accent-line-2: #E2E5DB;
+    --accent-line-3: #C9D0BE;
+    --accent-grad-1: #68745B;
+    --accent-grad-2: #565F48;
+    --on-accent: #FAFBF7;
+    --header-grad-1: #F5F6F1;
+    --header-grad-2: #E6E9DF;
+    --header-grad-3: #F1F2EB;
+    --line: #DFE0D7;
+    --line-soft: #EBECE4;
+    --chip-bg: #ECEDE6;
+    --tint: #E5E7E0;
+    --tint-2: #EBEDE6;
+    --amber: #89702F;
+    --amber-soft: #F4EFDA;
+    --red: #A05545;
+    --red-soft: #F7E9E3;
+    --red-line: #E7D6CD;
+    --shadow-rgb: 102, 112, 88;
+    --ink-rgb: 41, 44, 38;
+    --toast-bg: #292C26;
+    --toast-text: #F3F3EF;
+  }
+
+  /* 🍷 웜 샌드 · 버건디 (토피 브라운 포인트) */
+  :root[data-theme="burgundy"] {
+    --bg: #F6EFEA;
+    --bg-top: #FBF6F2;
+    --bg-bottom: #F0E6DF;
+    --glow-rgb: 233, 213, 201;
+    --glow-hi-rgb: 255, 251, 247;
+    --card: #FCF9F6;
+    --card-soft: #F8F0EA;
+    --card-tint: #FAF4F0;
+    --text: #2B1E1E;
+    --text-soft: #43302E;
+    --sub: #7C6A64;
+    --faint: #C9B8AE;
+    --faint-2: #D9C9BF;
+    --placeholder: #AC998F;
+    --accent: #592224;
+    --accent-deep: #45191B;
+    --accent-point: #7C5D41;
+    --accent-soft: #F0E1DC;
+    --accent-soft-2: #F6ECE8;
+    --accent-line: #E4CBC4;
+    --accent-line-2: #EDD9D2;
+    --accent-line-3: #DBBDB4;
+    --accent-grad-1: #6E3032;
+    --accent-grad-2: #592224;
+    --on-accent: #FDF8F6;
+    --header-grad-1: #FAF2ED;
+    --header-grad-2: #EDDBD3;
+    --header-grad-3: #F7EDE5;
+    --line: #E7D9CF;
+    --line-soft: #F1E7DF;
+    --chip-bg: #F2E8E0;
+    --tint: #EADFD6;
+    --tint-2: #F1E8E0;
+    --amber: #8A6636;
+    --amber-soft: #F5EBDA;
+    --green: #6B5138;
+    --green-soft: #EFE2D5;
+    --red: #A03A34;
+    --red-soft: #F8E4DF;
+    --red-line: #E9CFC7;
+    --shadow-rgb: 89, 34, 36;
+    --ink-rgb: 43, 30, 30;
+    --toast-bg: #2B1E1E;
+    --toast-text: #F6EFEA;
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
@@ -739,10 +739,13 @@
 <script>
 /* 테마는 화면이 그려지기 전에 먼저 붙여야 깜빡임이 없어요 */
 (function () {
-  var THEME_BG = { sage: '#F7F5F0', hunter: '#F9F5E9', butter: '#FAF8F1', blossom: '#F5F1E6' };
-  var t = 'sage';
-  try { t = localStorage.getItem('baby_food_theme_v1') || 'sage'; } catch (e) {}
-  if (!THEME_BG[t]) t = 'sage';
+  /* 새 4테마 + 옛 테마 키 안전 매핑 (없거나 모르는 값이면 기본 1번 테라코타) */
+  var THEME_BG = { terracotta: '#F7F3EC', silverblue: '#F2F1EB', sage: '#F3F3EF', burgundy: '#F6EFEA' };
+  var LEGACY_THEME = { hunter: 'sage', butter: 'silverblue', blossom: 'burgundy' };
+  var t = 'terracotta';
+  try { t = localStorage.getItem('baby_food_theme_v1') || 'terracotta'; } catch (e) {}
+  if (LEGACY_THEME[t]) t = LEGACY_THEME[t];
+  if (!THEME_BG[t]) t = 'terracotta';
   document.documentElement.setAttribute('data-theme', t);
   var m = document.querySelector('meta[name="theme-color"]');
   if (m) m.setAttribute('content', THEME_BG[t]);
@@ -955,19 +958,23 @@ const FAMILY_KEY = 'baby_food_family_v1';
 
 /* ═══════════ 🎨 컬러 테마 (사용자 선택) ═══════════ */
 const THEME_KEY = 'baby_food_theme_v1';
-const THEME_BG = { sage: '#F7F5F0', hunter: '#F9F5E9', butter: '#FAF8F1', blossom: '#F5F1E6' };
+const DEFAULT_THEME = 'terracotta';
+const THEME_BG = { terracotta: '#F7F3EC', silverblue: '#F2F1EB', sage: '#F3F3EF', burgundy: '#F6EFEA' };
+/* 옛 테마 키 → 새 테마 매핑 (색감이 가장 가까운 쪽으로) */
+const LEGACY_THEME = { hunter: 'sage', butter: 'silverblue', blossom: 'burgundy' };
 const THEMES = [
-  { id: 'sage',    emoji: '🌿', name: '세이지 · 오트밀',          desc: '차분한 기본 그린',          sw: ['#5F7A61', '#F7F5F0'] },
-  { id: 'hunter',  emoji: '🌲', name: '헌터 그린 · 샌드 듄',    desc: '깊은 초록 + 따뜻한 샌드',    sw: ['#3E5F44', '#DDD6B9'] },
-  { id: 'butter',  emoji: '🩵', name: '블루 그레이 · 모닝 버터', desc: '맑은 블루 + 버터 옐로',      sw: ['#729BC7', '#F3D98F'] },
-  { id: 'blossom', emoji: '🌸', name: '소프트 리넨 · 체리 블라썸', desc: '포근한 리넨 + 벚꽃 핑크',    sw: ['#D9738A', '#F5F1E6'] }
+  { id: 'terracotta', emoji: '🏺', name: '아이보리 · 테라코타',     desc: '따뜻한 클레이 브라운',      sw: ['#A75734', '#F7F3EC'] },
+  { id: 'silverblue', emoji: '🩵', name: '두부 화이트 · 실버 블루', desc: '차분한 블루 그레이',        sw: ['#647486', '#E2E0D4'] },
+  { id: 'sage',       emoji: '🌿', name: '웜 그레이 · 세이지',      desc: '고요한 세이지 그린',        sw: ['#667058', '#E5E7E0'] },
+  { id: 'burgundy',   emoji: '🍷', name: '웜 샌드 · 버건디',        desc: '깊은 버건디 + 토피 브라운', sw: ['#592224', '#7C5D41'] }
 ];
-let themeId = 'sage';
+let themeId = DEFAULT_THEME;
 
 function loadTheme() {
-  let t = 'sage';
-  try { t = localStorage.getItem(THEME_KEY) || 'sage'; } catch (e) {}
-  return THEMES.some(x => x.id === t) ? t : 'sage';
+  let t = DEFAULT_THEME;
+  try { t = localStorage.getItem(THEME_KEY) || DEFAULT_THEME; } catch (e) {}
+  t = LEGACY_THEME[t] || t;
+  return THEMES.some(x => x.id === t) ? t : DEFAULT_THEME;
 }
 function applyTheme(id, silent) {
   const theme = THEMES.find(x => x.id === id) || THEMES[0];
@@ -975,7 +982,7 @@ function applyTheme(id, silent) {
   document.documentElement.setAttribute('data-theme', theme.id);
   try { localStorage.setItem(THEME_KEY, theme.id); } catch (e) {}
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute('content', THEME_BG[theme.id] || '#F7F5F0');
+  if (meta) meta.setAttribute('content', THEME_BG[theme.id] || THEME_BG[DEFAULT_THEME]);
   renderThemeList();
   if (!silent) showToast(`${theme.emoji} ${theme.name} 테마로 바뀌었어요`);
 }
